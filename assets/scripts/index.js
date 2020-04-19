@@ -1,14 +1,25 @@
-var dictionaries = [{
-	name: "Բարաթեանի բառարան",
-	pattern: "^text.+\n",
-	link: "https://github.com/tigransimonyan/baratian-dictionary-assets",
-	row: "https://raw.githubusercontent.com/tigransimonyan/baratian-dictionary-assets/master/baratyan-dictionary.tab"
-}, {
-	name: "noch տեխնիկական բառարան",
-	pattern: "^text.+\n",
-	link: "https://github.com/norayr/noch-armenian-dictionary",
-	row: "https://raw.githubusercontent.com/norayr/noch-armenian-dictionary/master/noch_en-hy.tab"
-}];
+/* ################################################################### */
+/* ############ Այստեղ կարող էք աւելացնել ձեր բառարանը ############# */
+/* ################################################################### */
+
+var dictionaries = [
+	{
+		name: "Բարաթեանի բառարան",
+		pattern: "^text.+\n",
+		link: "https://github.com/tigransimonyan/baratian-dictionary-assets",
+		row: "https://raw.githubusercontent.com/tigransimonyan/baratian-dictionary-assets/master/baratyan-dictionary.tab"
+	},
+	{
+		name: "noch տեխնիկական բառարան",
+		pattern: "^text.+\n",
+		link: "https://github.com/norayr/noch-armenian-dictionary",
+		row: "https://raw.githubusercontent.com/norayr/noch-armenian-dictionary/master/noch_en-hy.tab"
+	}
+];
+
+/* ################################################################### */
+/* ################################################################### */
+/* ################################################################### */
 
 var loading = false;
 var timeout = null;
