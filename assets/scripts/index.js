@@ -46,10 +46,11 @@ function getResultsHtml(dictionary, array) {
 	if (!array || array.length === 0) {
 		return '';
 	}
-	var html = '<div class="border-bottom pb-2 pt-4 d-flex flex-row justify-content-between">';
+	var html = '<div class="border-bottom pb-2 pt-3 d-flex flex-row justify-content-between">';
 	html += '<b>' + dictionary.name + ' (' + array.length + ' բառ) </b>';
 	html += '<a target="_blank" href="' + dictionary.link + '">աղբիւր</a>';
 	html += '</div>'
+	html += '<ul class="pl-4">'
 	array.forEach(function (item) {
 		html += '<li class="mt-2">' + item + '</li>'
 	});
