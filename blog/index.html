@@ -1,0 +1,15 @@
+---
+title: "Իմանալ աւելին"
+layout: page
+permalink: /blog
+---
+
+{% for post in site.posts %}
+<div class="mb-3">
+	<a href="{{ post.url | prepend: site.baseurl }}" class="catalogue-item h6">
+		<time datetime="{{ post.date }}">
+			{{post.title}}
+		</time>
+	</a>
+</div>
+{% endfor %}
