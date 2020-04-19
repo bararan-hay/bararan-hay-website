@@ -14,6 +14,12 @@ var dictionaries = [
 		pattern: "^text.+\n",
 		link: "https://github.com/norayr/noch-armenian-dictionary",
 		row: "https://raw.githubusercontent.com/norayr/noch-armenian-dictionary/master/noch_en-hy.tab"
+	},
+	{
+		name: "armdicto բառարան",
+		pattern: "^text.+\n",
+		link: "https://github.com/norayr/freearmdicto",
+		row: "https://raw.githubusercontent.com/norayr/freearmdicto/master/armdicto.tab"
 	}
 ];
 
