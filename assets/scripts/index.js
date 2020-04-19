@@ -1,5 +1,5 @@
 var dictionaries = [{
-	name: "Բարաթյանի բառարան",
+	name: "Բարաթեանի բառարան",
 	pattern: "^text.+\n",
 	link: "https://github.com/tigransimonyan/baratian-dictionary-assets",
 	row: "https://raw.githubusercontent.com/tigransimonyan/baratian-dictionary-assets/master/baratyan-dictionary.tab"
@@ -37,7 +37,7 @@ function getResultsHtml(dictionary, array) {
 	}
 	var html = '<div class="border-bottom pb-2 pt-4 d-flex flex-row justify-content-between">';
 	html += '<b>' + dictionary.name + ' (' + array.length + ' բառ) </b>';
-	html += '<a target="_blank" href="' + dictionary.link + '">աղբյուր</a>';
+	html += '<a target="_blank" href="' + dictionary.link + '">աղբիւր</a>';
 	html += '</div>'
 	array.forEach(function (item) {
 		html += '<li class="mt-2">' + item + '</li>'
@@ -47,7 +47,7 @@ function getResultsHtml(dictionary, array) {
 }
 
 function renderResultsHtml(html) {
-	return html || '<h6 class="text-center mt-5">Շտեմարանում նման բառ չկա ։(</h6>';
+	return html || '<h6 class="text-center mt-5">Շտեմարանում նման բառ չկայ ։(</h6>';
 }
 
 function handleInput(e) {
