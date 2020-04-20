@@ -22,6 +22,12 @@ var dictionaries = [
 		row: "https://raw.githubusercontent.com/norayr/freearmdicto/master/armdicto.tab"
 	},
 	{
+		name: "Հայկազեան բառարան",
+		pattern: "^text.+\n",
+		link: "https://github.com/norayr/enacademic_to_stardict",
+		row: " https://raw.githubusercontent.com/norayr/enacademic_to_stardict/master/armenian_enacademic.tab"
+	},
+	{
 		name: "տօկի պօնա֊հայերէն բառարան",
 		pattern: "^text.*\n.+\n",
 		link: "https://gitlab.com/kamee/toki-pona-armenian",
@@ -73,7 +79,10 @@ function getResultsHtml(dictionary, array) {
 }
 
 function renderResultsHtml(html) {
-	return html || '<h6 class="text-center mt-5">Շտեմարանում նման բառ չկայ ։(</h6>';
+	if (html) {
+		return html.replace(/\\n/g, " ");
+	}
+	return '<h6 class="text-center mt-5">Շտեմարանում նման բառ չկայ ։(</h6>';
 }
 
 function handleInput(e) {
