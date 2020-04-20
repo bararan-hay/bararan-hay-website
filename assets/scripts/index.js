@@ -20,6 +20,12 @@ var dictionaries = [
 		pattern: "^text.+\n",
 		link: "https://github.com/norayr/freearmdicto",
 		row: "https://raw.githubusercontent.com/norayr/freearmdicto/master/armdicto.tab"
+	},
+	{
+		name: "տօկի պօնա֊հայերէն բառարան",
+		pattern: "^text.*\n.+\n",
+		link: "https://gitlab.com/kamee/toki-pona-armenian",
+		row: " https://cors-anywhere.herokuapp.com/https://gitlab.com/kamee/toki-pona-armenian/-/raw/master/toki-pona-armenian.babylon"
 	}
 ];
 
@@ -29,6 +35,8 @@ var dictionaries = [
 
 var loading = false;
 var timeout = null;
+var resultsMaxCount = 5;
+var debounceDelay = 300;
 
 dictionaries.forEach(dictionary => {
 	dictionary.data = "";
@@ -53,11 +61,11 @@ function getResultsHtml(dictionary, array) {
 		return '';
 	}
 	var html = '<div class="border-bottom pb-2 pt-3 d-flex flex-row justify-content-between">';
-	html += '<b>' + dictionary.name + ' (' + array.length + ' բառ) </b>';
+	html += '<b>' + dictionary.name + '</b>';
 	html += '<a target="_blank" href="' + dictionary.link + '">աղբիւր</a>';
 	html += '</div>'
 	html += '<ul class="pl-4">'
-	array.forEach(function (item) {
+	array.slice(0, resultsMaxCount).forEach(function (item) {
 		html += '<li class="mt-2">' + item + '</li>'
 	});
 	html += '</ul>'
@@ -89,5 +97,5 @@ function handleInput(e) {
 		})
 		results.innerHTML = renderResultsHtml(html);
 		loading = false;
-	}, 300)
+	}, debounceDelay)
 }
