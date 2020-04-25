@@ -3,19 +3,22 @@ var timeout = null;
 var resultsMaxCount = 5;
 var debounceDelay = 300;
 
-window.addEventListener('DOMContentLoaded', (event) => {
-	console.log("DOMContentLoaded")
+function pageLoaded() {
 	searchInput.removeAttribute("disabled");
 	results.innerHTML = "";
+}
+
+window.addEventListener('DOMContentLoaded', (event) => {
+	pageLoaded();
 });
 
 document.addEventListener("DOMContentLoaded", function (event) {
-	console.log("DOM fully loaded and parsed");
+	pageLoaded();
 });
 
 document.onreadystatechange = function () {
 	if (document.readyState === 'complete') {
-		console.log("onreadystatechange")
+		pageLoaded();
 	}
 }
 
