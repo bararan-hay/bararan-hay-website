@@ -21,13 +21,25 @@ layout: default
 	</div>
 </div>
 
-<div class="dictionaries d-none">
+<div class="dictionaries d-none" id="dictionaries">
 	<div name="Բարաթեանի բառարան" wordPattern="^[A-z]" linePattern="^text.+\n"
 		link="https://github.com/tigransimonyan/baratian-dictionary-assets">
 		{% include dictionaries/baratyan-dictionary.tab %}
 	</div>
-	<div name="Հայկազեան բառարան" wordPattern="^[A-z]" linePattern="^text.+\n"
+	<div name="Հայկազեան բառարան" wordPattern="^[Ա-և]" linePattern="^text.+\n"
 		link="https://github.com/tigransimonyan/baratian-dictionary-assets">
-		{% include dictionaries/armenian-enacademic.tab %}
+		{% include dictionaries/armenian_enacademic.tab %}
+	</div>
+	<div name="Noch տեխնիկական բառարան" wordPattern="^[A-z]" linePattern="^text.+\n"
+		link="https://github.com/norayr/noch-armenian-dictionary">
+		{% include dictionaries/noch_en-hy.tab %}
+	</div>
+	<div name="Armdicto բառարան" wordPattern="^[A-z]" linePattern="^text.+\n"
+		link="https://github.com/norayr/freearmdicto">
+		{% include dictionaries/armdicto.tab %}
+	</div>
+	<div name="տօկի պօնա֊հայերէն բառարան" wordPattern="^[A-z]" linePattern="^text.*\n.+\n"
+		link="https://github.com/norayr/freearmdicto">
+		{% include dictionaries/toki-pona-armenian.babylon %}
 	</div>
 </div>
