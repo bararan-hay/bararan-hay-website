@@ -8,7 +8,8 @@ var dictionaries = [
 		linePattern: "^text.+\n",
 		name: "Բարաթեանի բառարան",
 		link: "https://github.com/tigransimonyan/baratian-dictionary-assets",
-		row: "https://raw.githubusercontent.com/tigransimonyan/baratian-dictionary-assets/master/baratyan-dictionary.tab"
+		row: "https://raw.githubusercontent.com/tigransimonyan/baratian-dictionary-assets/master/baratyan-dictionary.tab",
+		data: "{% include navigation.html %}"
 	},
 	{
 		wordPattern: "^[A-z]",
