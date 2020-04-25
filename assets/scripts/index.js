@@ -3,6 +3,12 @@ var timeout = null;
 var resultsMaxCount = 5;
 var debounceDelay = 300;
 
+window.addEventListener('DOMContentLoaded', (event) => {
+	searchInput.removeAttribute("disabled");
+	results.innerHTML = "";
+});
+
+
 function getLoadingHtml() {
 	var html = '<div class="d-flex justify-content-center mt-5">';
 	html += '<div class="spinner-border text-dark" role="status">';
