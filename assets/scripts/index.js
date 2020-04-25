@@ -4,8 +4,10 @@ var resultsMaxCount = 5;
 var debounceDelay = 300;
 
 function pageLoaded() {
-	searchInput.removeAttribute("disabled");
-	results.innerHTML = "";
+	if (searchInput) {
+		searchInput.removeAttribute("disabled");
+		results.innerHTML = "";
+	}
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
