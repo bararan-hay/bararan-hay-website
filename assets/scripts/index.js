@@ -4,7 +4,7 @@ var resultsMaxCount = 5;
 var debounceDelay = 300;
 
 function pageLoaded() {
-	if (searchInput) {
+	if (typeof searchInput !== "undefined") {
 		searchInput.removeAttribute("disabled");
 		results.innerHTML = "";
 	}
