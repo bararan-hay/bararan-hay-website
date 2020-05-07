@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-{% include components/head.html %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  {% seo %}
+
+  <link rel="stylesheet" href="{{ '/assets/styles/main.css' | relative_url }}">
+  <script src="{{ '/assets/scripts/index.js' | relative_url}}"></script>
+
+  {% feed_meta %}
+</head>
 
 <body class="bg-light">
-  {% include components/navigation.html %}
+  {% include navigation.html %}
   {{ content }}
-  {% include components/footer.html %}
+  {% include footer.html %}
 </body>
 
 </html>

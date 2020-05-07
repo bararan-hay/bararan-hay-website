@@ -13,43 +13,10 @@ layout: default
 				</p>
 			</div>
 			<div class="input-group input-group-lg">
-				<input disabled type="text" class="form-control" autofocus placeholder="Գրէք անգլերէն կամ հայերէն բառ..."
+				<input type="text" class="form-control" autofocus placeholder="Գրէք անգլերէն կամ հայերէն բառ..."
 					aria-label="Գրէք անգլերէն բառը" id="searchInput" type="text" oninput="handleInput(this)">
 			</div>
-			<div id="results" class="pt-3 pb-5">
-				<div class="d-flex justify-content-center mt-5">
-					<div class="spinner-border text-dark" role="status">
-						<span class="sr-only">որոնում...</span>
-					</div>
-				</div>
-			</div>
+			<div id="results" class="pt-3 pb-5"></div>
 		</div>
-	</div>
-</div>
-
-<div class="dictionaries" style="display: none;" id="dictionaries" hidden>
-	<div name="Բարաթեանի բառարան" wordPattern="^[A-z]" linePattern="^text.+\n"
-		link="https://github.com/tigransimonyan/baratian-dictionary-assets">
-		{% include dictionaries/baratyan-dictionary.tab %}
-	</div>
-	<div name="Հայկազեան բառարան" wordPattern="^[Ա-և]" linePattern="^text.+\n"
-		link="https://github.com/norayr/enacademic_to_stardict">
-		{% include dictionaries/armenian_enacademic.tab %}
-	</div>
-	<div name="Noch տեխնիկական բառարան" wordPattern="^[Ա-և]" linePattern="^(?:.+\|\s*)?text.*\n.+\n"
-		link="https://github.com/norayr/noch-armenian-dictionary">
-		{% include dictionaries/noch_hy-en.babylon %}
-	</div>
-	<div name="Noch տեխնիկական բառարան" wordPattern="^[A-z]" linePattern="^text.+\n"
-		link="https://github.com/norayr/noch-armenian-dictionary">
-		{% include dictionaries/noch_en-hy.tab %}
-	</div>
-	<div name="Armdicto բառարան" wordPattern="^[A-z]" linePattern="^text.+\n"
-		link="https://github.com/norayr/freearmdicto">
-		{% include dictionaries/armdicto.tab %}
-	</div>
-	<div name="տօկի պօնա֊հայերէն բառարան" wordPattern="^[A-z]" linePattern="^text.*\n.+\n"
-		link="https://gitlab.com/kamee/toki-pona-armenian">
-		{% include dictionaries/toki-pona-armenian.babylon %}
 	</div>
 </div>

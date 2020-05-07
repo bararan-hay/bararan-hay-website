@@ -2,6 +2,62 @@ var loading = false;
 var timeout = null;
 var resultsMaxCount = 5;
 var debounceDelay = 300;
+var version = "v1.1";
+
+var dictionaries = [{
+	wordPattern: "^[A-z]",
+	linePattern: "^text.+\n",
+	name: "Բարաթեանի բառարան",
+	link: "https://github.com/tigransimonyan/baratian-dictionary-assets",
+	row: "https://raw.githubusercontent.com/tigransimonyan/baratian-dictionary-assets/master/baratyan-dictionary.tab"
+}, {
+	wordPattern: "^[Ա-և]",
+	linePattern: "^text.+\n",
+	name: "Հայկազեան բառարան",
+	link: "https://github.com/norayr/enacademic_to_stardict",
+	row: "https://raw.githubusercontent.com/norayr/enacademic_to_stardict/master/armenian_enacademic.tab"
+}, {
+	wordPattern: "^[Ա-և]",
+	linePattern: "^(?:.+\|\s*)?text.*\n.+\n",
+	name: "Noch տեխնիկական բառարան",
+	link: "https://github.com/norayr/noch-armenian-dictionary",
+	row: "https://raw.githubusercontent.com/norayr/noch-armenian-dictionary/master/noch_hy-en.babylon"
+}, {
+	wordPattern: "^[A-z]",
+	linePattern: "^text.+\n",
+	name: "Noch տեխնիկական բառարան",
+	link: "https://github.com/norayr/noch-armenian-dictionary",
+	row: "https://raw.githubusercontent.com/norayr/noch-armenian-dictionary/master/noch_en-hy.tab"
+}, {
+	wordPattern: "^[A-z]",
+	linePattern: "^text.+\n",
+	name: "Armdicto բառարան",
+	link: "https://github.com/norayr/freearmdicto",
+	row: "https://raw.githubusercontent.com/norayr/freearmdicto/master/armdicto.tab"
+}]
+
+caches.keys().then(function (versions) {
+	versions.forEach(function (_version) {
+		if (_version !== version) {
+			return caches.delete(_version);
+		}
+	})
+})
+
+function request(url) {
+	return caches.match(url).then(function (response) {
+		if (response !== undefined) {
+			return response.text();
+		}
+		return fetch(url).then(function (response) {
+			var responseClone = response.clone();
+			caches.open(version).then(function (cache) {
+				cache.put(url, responseClone);
+			});
+			return response.text();
+		})
+	});
+}
 
 function pageLoaded() {
 	if (typeof searchInput !== "undefined") {
@@ -10,19 +66,19 @@ function pageLoaded() {
 	}
 }
 
-window.addEventListener('DOMContentLoaded', (event) => {
-	pageLoaded();
-});
+// window.addEventListener('DOMContentLoaded', (event) => {
+// 	pageLoaded();
+// });
 
-document.addEventListener("DOMContentLoaded", function (event) {
-	pageLoaded();
-});
+// document.addEventListener("DOMContentLoaded", function (event) {
+// 	pageLoaded();
+// });
 
-document.onreadystatechange = function () {
-	if (document.readyState === 'complete') {
-		pageLoaded();
-	}
-}
+// document.onreadystatechange = function () {
+// 	if (document.readyState === 'complete') {
+// 		pageLoaded();
+// 	}
+// }
 
 function getLoadingHtml() {
 	var html = '<div class="d-flex justify-content-center mt-5">';
@@ -44,17 +100,10 @@ function getResultsHtml(dictionary, regexp) {
 	html += '</div>'
 	html += '<ul class="pl-4">'
 	lines.slice(0, resultsMaxCount).forEach(function (item) {
-		html += '<li class="mt-2">' + item + '</li>'
+		html += '<li class="mt-2">' + item.replace(/\\n/g, " ") + '</li>'
 	});
 	html += '</ul>'
 	return html;
-}
-
-function renderResultsHtml(html) {
-	if (html) {
-		return html.replace(/\\n/g, " ");
-	}
-	return '<h6 class="text-center mt-5">Շտեմարանում նման բառ չկայ ։(</h6>';
 }
 
 function handleInput(e) {
@@ -69,24 +118,30 @@ function handleInput(e) {
 		loading = true;
 	}
 	timeout = setTimeout(function () {
-		var html = '';
-		for (var i = 0; i < dictionaries.children.length; i++) {
-			var children = dictionaries.children[i];
-			var wordPattern = children.getAttribute("wordPattern");
-			var linePattern = children.getAttribute("linePattern");
-			var wordRegExp = new RegExp(wordPattern);
-			if (!wordRegExp.test(text)) {
-				continue;
-			}
-			var dictionary = {
-				name: children.getAttribute("name"),
-				link: children.getAttribute("link"),
-				data: children.innerText
-			}
-			var lineRegExp = new RegExp(linePattern.replace("text", text), "gim");
-			html += getResultsHtml(dictionary, lineRegExp);
-		}
-		results.innerHTML = renderResultsHtml(html);
 		loading = false;
+		var html = ""
+		var count = 0;
+		dictionaries.forEach(function (dictionary) {
+			var wordRegExp = new RegExp(dictionary.wordPattern);
+			if (!wordRegExp.test(text)) {
+				return null;
+			}
+			count++;
+			return request(dictionary.row).then(function (data) {
+				var pattern = dictionary.linePattern.replace("text", text)
+				var lineRegExp = new RegExp(pattern, "gim");
+				dictionary.data = data;
+				html += getResultsHtml(dictionary, lineRegExp);
+				if (--count === 0) {
+					if (html) {
+						results.innerHTML = html;
+					} else {
+						results.innerHTML = '<h6 class="text-center mt-5">Շտեմարանում նման բառ չկայ ։(</h6>'
+					}
+				} else {
+					results.innerHTML = html + getLoadingHtml();
+				}
+			})
+		})
 	}, debounceDelay)
 }
