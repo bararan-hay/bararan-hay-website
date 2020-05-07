@@ -1,8 +1,6 @@
-var loading = false;
-var timeout = null;
-var resultsMaxCount = 5;
-var debounceDelay = 300;
-var version = "v1.1";
+/* ################################################################### */
+/* ############ Այստեղ կարող էք աւելացնել ձեր բառարանը ############# */
+/* ################################################################### */
 
 var dictionaries = [{
 	wordPattern: "^[A-z]",
@@ -35,6 +33,14 @@ var dictionaries = [{
 	link: "https://github.com/norayr/freearmdicto",
 	row: "https://raw.githubusercontent.com/norayr/freearmdicto/master/armdicto.tab"
 }]
+
+/* ################################################################### */
+/* ################################################################### */
+/* ################################################################### */
+
+var resultsMaxCount = 5;
+var debounceDelay = 300;
+var version = "v1.1";
 
 caches.keys().then(function (versions) {
 	versions.forEach(function (_version) {
@@ -84,6 +90,9 @@ function getResultsHtml(dictionary, regexp) {
 	html += '</ul>'
 	return html;
 }
+
+var loading = false;
+var timeout = null;
 
 function handleInput(e) {
 	clearTimeout(timeout)
