@@ -16,7 +16,7 @@ var dictionaries = [{
 	row: "https://raw.githubusercontent.com/norayr/enacademic_to_stardict/master/armenian_enacademic.tab"
 }, {
 	wordPattern: "^[Ա-և]",
-	linePattern: "^(?:.+\|\s*)?text.*\n.+\n",
+	linePattern: "^(?:.+\\|\\s*)?text.*\n.+\n",
 	name: "Noch տեխնիկական բառարան",
 	link: "https://github.com/norayr/noch-armenian-dictionary",
 	row: "https://raw.githubusercontent.com/norayr/noch-armenian-dictionary/master/noch_hy-en.babylon"
