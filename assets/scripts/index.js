@@ -59,27 +59,6 @@ function request(url) {
 	});
 }
 
-function pageLoaded() {
-	if (typeof searchInput !== "undefined") {
-		searchInput.removeAttribute("disabled");
-		results.innerHTML = "";
-	}
-}
-
-// window.addEventListener('DOMContentLoaded', (event) => {
-// 	pageLoaded();
-// });
-
-// document.addEventListener("DOMContentLoaded", function (event) {
-// 	pageLoaded();
-// });
-
-// document.onreadystatechange = function () {
-// 	if (document.readyState === 'complete') {
-// 		pageLoaded();
-// 	}
-// }
-
 function getLoadingHtml() {
 	var html = '<div class="d-flex justify-content-center mt-5">';
 	html += '<div class="spinner-border text-dark" role="status">';
@@ -127,7 +106,7 @@ function handleInput(e) {
 				return null;
 			}
 			count++;
-			return request(dictionary.row).then(function (data) {
+			request(dictionary.row).then(function (data) {
 				var pattern = dictionary.linePattern.replace("text", text)
 				var lineRegExp = new RegExp(pattern, "gim");
 				dictionary.data = data;
