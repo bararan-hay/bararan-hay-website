@@ -42,6 +42,20 @@ var resultsMaxCount = 5;
 var debounceDelay = 300;
 var version = "v1.1";
 
+if (localStorage.getItem('dark')) {
+	document.body.classList.add("dark-theme");
+}
+
+function changeTheme() {
+	if (localStorage.getItem('dark')) {
+		localStorage.removeItem('dark');
+		document.body.classList.remove("dark-theme");
+	} else {
+		localStorage.setItem('dark', 'true');
+		document.body.classList.add("dark-theme");
+	}
+}
+
 caches.keys().then(function (versions) {
 	versions.forEach(function (_version) {
 		if (_version !== version) {

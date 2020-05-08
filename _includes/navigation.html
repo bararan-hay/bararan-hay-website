@@ -1,4 +1,9 @@
-<nav class="px-3 py-2 navbar-dark bg-dark ">
-	<a class="text-light mr-3" href="/">Գլխաւոր էջ</a>
-	<a class="text-light" href="{{ site.baseurl }}/blog">Իմանալ աւելին</a>
+<nav class="px-3 py-2 navbar-dark bg-dark d-flex flex-row">
+	<div class="flex-fill">
+		<a class="text-light mr-3" href="/">Գլխաւոր էջ</a>
+		<a class="text-light" href="{{ site.baseurl }}/blog">Իմանալ աւելին</a>
+	</div>
+	<div>
+		<span class="theme-switcher" onclick="changeTheme(this)"></span>
+	</div>
 </nav>
