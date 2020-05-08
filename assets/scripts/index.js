@@ -64,18 +64,27 @@ caches.keys().then(function (versions) {
 	})
 })
 
-function request(url) {
-	return caches.match(url).then(function (response) {
+function getDictionary(dictionary) {
+	if (dictionary.data) {
+		return Promise.resolve(dictionary);
+	}
+	return caches.match(dictionary.row).then(function (response) {
 		if (response !== undefined) {
-			return response.text();
+			return response;
 		}
-		return fetch(url).then(function (response) {
+		return fetch(dictionary.row).then(function (response) {
 			var responseClone = response.clone();
 			caches.open(version).then(function (cache) {
-				cache.put(url, responseClone);
+				cache.put(dictionary.row, responseClone);
 			});
-			return response.text();
+			return response;
 		})
+	}).catch(function (error) {
+		return fetch(dictionary.row);
+	}).then(function (data) {
+		return data.text();
+	}).then(function (data) {
+		return Object.assign(dictionary, { data });
 	});
 }
 
@@ -129,11 +138,10 @@ function handleInput(e) {
 				return null;
 			}
 			count++;
-			request(dictionary.row).then(function (data) {
-				var pattern = dictionary.linePattern.replace("text", text)
+			getDictionary(dictionary).then(function (data) {
+				var pattern = data.linePattern.replace("text", text)
 				var lineRegExp = new RegExp(pattern, "gim");
-				dictionary.data = data;
-				html += getResultsHtml(dictionary, lineRegExp);
+				html += getResultsHtml(data, lineRegExp);
 				if (--count === 0) {
 					if (html) {
 						results.innerHTML = html;
