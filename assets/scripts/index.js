@@ -46,6 +46,33 @@ if (localStorage.getItem('dark')) {
 	document.body.classList.add("dark-theme");
 }
 
+localforage.config({
+	name: "bararan-hay",
+	description: 'dictionaries',
+	driver: [
+		localforage.WEBSQL,
+		localforage.INDEXEDDB
+	],
+});
+
+localforage.ready().then(function () {
+	localforage.getItem("version").then(function (value) {
+		console.log(localforage.driver());
+		if (value === version) {
+			return null;
+		}
+		return localforage.clear().then(function () {
+			return localforage.setItem("version", version)
+		})
+	})
+});
+
+caches.keys().then(function (versions) {
+	versions.forEach(function (_version) {
+		return caches.delete(_version);
+	})
+})
+
 function changeTheme() {
 	if (localStorage.getItem('dark')) {
 		localStorage.removeItem('dark');
@@ -56,36 +83,32 @@ function changeTheme() {
 	}
 }
 
-caches.keys().then(function (versions) {
-	versions.forEach(function (_version) {
-		if (_version !== version) {
-			return caches.delete(_version);
-		}
-	})
-})
-
 function getDictionary(dictionary) {
 	if (dictionary.data) {
 		return Promise.resolve(dictionary);
 	}
-	return caches.match(dictionary.row).then(function (response) {
-		if (response !== undefined) {
-			return response;
-		}
-		return fetch(dictionary.row).then(function (response) {
-			var responseClone = response.clone();
-			caches.open(version).then(function (cache) {
-				cache.put(dictionary.row, responseClone);
-			});
-			return response;
+	return localforage
+		.getItem(dictionary.row)
+		.catch(function () {
+			return null;
 		})
-	}).catch(function (error) {
-		return fetch(dictionary.row);
-	}).then(function (data) {
-		return data.text();
-	}).then(function (data) {
-		return Object.assign(dictionary, { data });
-	});
+		.then(function (data) {
+			if (data) return data;
+			return fetch(dictionary.row)
+				.then(function (response) {
+					return response.text();
+				})
+				.then(function (data) {
+					return localforage
+						.setItem(dictionary.row, data)
+						.catch(function () {
+							return data;
+						})
+				})
+		})
+		.then(function (data) {
+			return Object.assign(dictionary, { data });
+		})
 }
 
 function getLoadingHtml() {
@@ -114,6 +137,18 @@ function getResultsHtml(dictionary, regexp) {
 	return html;
 }
 
+function renderResultsHtml(html, isLast) {
+	if (isLast) {
+		if (html) {
+			results.innerHTML = html;
+		} else {
+			results.innerHTML = '<h6 class="text-center mt-5">Շտեմարանում նման բառ չկայ ։(</h6>'
+		}
+	} else {
+		results.innerHTML = html + getLoadingHtml();
+	}
+}
+
 var loading = false;
 var timeout = null;
 
@@ -138,20 +173,14 @@ function handleInput(e) {
 				return null;
 			}
 			count++;
-			getDictionary(dictionary).then(function (data) {
-				var pattern = data.linePattern.replace("text", text)
-				var lineRegExp = new RegExp(pattern, "gim");
-				html += getResultsHtml(data, lineRegExp);
-				if (--count === 0) {
-					if (html) {
-						results.innerHTML = html;
-					} else {
-						results.innerHTML = '<h6 class="text-center mt-5">Շտեմարանում նման բառ չկայ ։(</h6>'
-					}
-				} else {
-					results.innerHTML = html + getLoadingHtml();
-				}
-			})
+			getDictionary(dictionary)
+				.then(function (data) {
+					var pattern = data.linePattern.replace("text", text)
+					var lineRegExp = new RegExp(pattern, "gim");
+					var isLast = --count === 0;
+					html += getResultsHtml(data, lineRegExp);
+					renderResultsHtml(html, isLast)
+				})
 		})
 	}, debounceDelay)
 }
