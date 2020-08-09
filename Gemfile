@@ -14,6 +14,6 @@ group :jekyll_plugins do
     gem 'jekyll-sitemap'
     gem 'jekyll-paginate'
     gem 'jekyll-seo-tag'
-    gem 'kramdown'
+    gem 'kramdown', '>= 2.3.0'
     gem 'rouge'
 end
