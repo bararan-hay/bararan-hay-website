@@ -67,12 +67,6 @@ localforage.ready().then(function () {
 	})
 });
 
-caches.keys().then(function (versions) {
-	versions.forEach(function (_version) {
-		return caches.delete(_version);
-	})
-})
-
 function changeTheme() {
 	if (localStorage.getItem('dark')) {
 		localStorage.removeItem('dark');
