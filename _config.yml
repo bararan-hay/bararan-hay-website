@@ -1,7 +1,7 @@
 # Site settings
 title:          "Առցանց բառարան"
 description:    "Անգլերեն-Հայերեն առցանց բառարան"
-url:            ""
+url:            "https://բառարան.հայ"
 
 # Build settings
 markdown:       kramdown
