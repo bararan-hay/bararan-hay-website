@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Typography, Input, Form, Row, Col, Card, Empty, Divider } from 'antd';
-import { BookFilled } from '@ant-design/icons';
+import { Typography, Input, Form, Row, Col, Card, Empty, Space } from 'antd';
+import { BookOutlined } from '@ant-design/icons';
 import { useDics } from 'providers/ProvideDics';
 import DicsList from '../components/DicsList';
 
-const { Title } = Typography;
+import GitHubButton from 'react-github-btn';
+
+const { Title, Paragraph } = Typography;
 
 export default function Home() {
   const { storage } = useDics();
@@ -21,8 +23,9 @@ export default function Home() {
         .trim()
         .replace(/\{|\}|\[|\]|\\|\(|\)/g, '')
         .replace(/և|եւ/g, '(և|եւ)');
-      if (storage.checkeds.includes(dictionary.key) && text) {
-        const pattern = `^${text}.+\n`;
+      if (storage.checkedKeys[dictionary.key] && text) {
+        // const pattern = `^${text}.+\n`;
+        const pattern = `^(?:.+\\|\\s*)?${text}.*\n.+\n`;
         const regexp = new RegExp(pattern, 'gim');
         const lines = dictionary.data.match(regexp);
         if (lines) {
@@ -36,14 +39,15 @@ export default function Home() {
       }
     });
     setResults(array);
-  }, [search, storage.checkeds]);
+  }, [search, storage.checkedKeys]);
 
   return (
     <div>
       <Row gutter={20}>
         <Col md={7}>
           <Card
-            bordered
+            style={{ marginBottom: 12 }}
+            bordered={false}
             title={
               <Title level={5} strong style={{ lineHeight: 1 }}>
                 Ընտրեք բառարանը
@@ -52,37 +56,76 @@ export default function Home() {
           >
             <DicsList />
           </Card>
+          <Space align="start">
+            <GitHubButton
+              href="https://github.com/bararan-hay/bararan-hay-website"
+              data-color-scheme="no-preference: light; light: light; dark: light;"
+              data-size="large"
+              data-icon="octicon-star"
+              data-show-count="true"
+              aria-label="Star bararan-hay/bararan-hay-website on GitHub"
+            >
+              Աստղեր
+            </GitHubButton>
+          </Space>
         </Col>
         <Col md={14}>
           <Form size="large">
             <Input
               allowClear
+              autoFocus
               value={search}
-              disabled={storage.loading}
-              style={{ height: '50px' }}
+              style={{ height: '50px', border: 'none', padding: '10px 20px' }}
               placeholder="Մուտքագրեք բառը..."
               onChange={e => setSearch(e.target.value)}
             />
           </Form>
+          <Paragraph
+            style={{
+              borderRadius: 2,
+              background: '#fff',
+              padding: '20px 20px',
+              margin: '10px 0'
+            }}
+          >
+            <Title level={5}>Բարեւ սիրելի օգտատեր :)</Title>
+            Այս կայքն աշխատում է{' '}
+            <a href="https://github.com/bararan-hay" target="_blank">
+              բաց ելակոդով բառարանների
+            </a>{' '}
+            հիման վրա։ Բառարան ընտրելով դու ներբեռնում ես այն քո դիտարկիչի
+            հիշողության մեջ որտեղից էլ հետագայում կատարվում է որոնումը։
+          </Paragraph>
+
           {isEmpty && (
-            <Empty
-              style={{ paddingTop: 55 }}
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description="Ընտրված բառարաններում այդ բառը չկա ։("
-            />
+            <div
+              style={{
+                borderRadius: 2,
+                background: '#fff',
+                padding: '20px 20px',
+                margin: '10px 0'
+              }}
+            >
+              <Empty
+                style={{ paddingTop: 55 }}
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description="Ընտրված բառարաններում այս բառը չկա ։("
+              />
+            </div>
           )}
           <div style={{}}>
             {results.map(result => (
               <div
                 key={result.key}
                 style={{
+                  borderRadius: 2,
                   background: '#fff',
-                  padding: '10px 10px',
+                  padding: '20px 20px',
                   margin: '10px 0'
                 }}
               >
                 <Title level={5}>
-                  <BookFilled style={{ marginRight: 8 }} />
+                  <BookOutlined style={{ marginRight: 8 }} />
                   {result.name}
                 </Title>
                 <ul style={{ padding: '10px 0 0 25px' }}>

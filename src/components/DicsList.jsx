@@ -22,7 +22,7 @@ const Item = ({ dictionary }) => {
     <Spin spinning={loading}>
       <Checkbox
         onChange={onCheck}
-        checked={storage.checkeds.includes(dictionary.key)}
+        checked={storage.checkedKeys[dictionary.key]}
         style={{
           display: 'flex',
           margin: '0 0 12px 0',
