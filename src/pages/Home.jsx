@@ -71,9 +71,16 @@ export default function Home() {
               description="Ընտրված բառարաններում այդ բառը չկա ։("
             />
           )}
-          <div style={{ padding: '30px 8px' }}>
+          <div style={{}}>
             {results.map(result => (
-              <div key={result.key}>
+              <div
+                key={result.key}
+                style={{
+                  background: '#fff',
+                  padding: '10px 10px',
+                  margin: '10px 0'
+                }}
+              >
                 <Title level={5}>
                   <BookFilled style={{ marginRight: 8 }} />
                   {result.name}
