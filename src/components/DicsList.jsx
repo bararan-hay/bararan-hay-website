@@ -25,11 +25,11 @@ const Item = ({ dictionary }) => {
         checked={storage.checkedKeys[dictionary.key]}
         style={{
           display: 'flex',
-          margin: '0 0 12px 0',
+          margin: '0 0 14px 0',
           alignItems: 'flex-start'
         }}
       >
-        <span style={{ top: -5, position: 'relative' }}>{dictionary.name}</span>
+        <span style={{ top: -1, position: 'relative' }}>{dictionary.name}</span>
       </Checkbox>
     </Spin>
   );

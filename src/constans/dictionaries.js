@@ -33,6 +33,6 @@ export const DICS = [
     key: 'toki-pona-armenian',
     name: 'Տոկիպոնա-հայերեն բառարան',
     location:
-      'https://raw.githubusercontent.com/bararan-hay/toki-pona-armenian/master/toki-pona-armenian.babylon?token=AGCZ7W57YTNMGHCUUFR3S63AO5RD4'
+      'https://raw.githubusercontent.com/bararan-hay/toki-pona-armenian/master/toki-pona-armenian.babylon'
   }
 ];

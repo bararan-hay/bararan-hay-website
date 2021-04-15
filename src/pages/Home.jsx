@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Typography, Input, Form, Row, Col, Card, Empty, Space } from 'antd';
-import { BookOutlined } from '@ant-design/icons';
+import { Typography, Input, Form, Row, Col, Card, Empty } from 'antd';
+import {
+  BookOutlined,
+  BulbOutlined,
+  FileSearchOutlined
+} from '@ant-design/icons';
 import { useDics } from 'providers/ProvideDics';
-import DicsList from '../components/DicsList';
+import { elasticSearch } from 'helper/dictionary';
+import DicsList from 'components/DicsList';
 
-import GitHubButton from 'react-github-btn';
-
-const { Title, Paragraph } = Typography;
+const { Title } = Typography;
 
 export default function Home() {
   const { storage } = useDics();
@@ -16,61 +19,28 @@ export default function Home() {
   const isEmpty = !!search.trim() && results.length === 0;
 
   useEffect(() => {
-    const array = [];
-    const resultsMaxCount = 4;
-    storage.dics.forEach(dictionary => {
-      const text = search
-        .trim()
-        .replace(/\{|\}|\[|\]|\\|\(|\)/g, '')
-        .replace(/և|եւ/g, '(և|եւ)');
-      if (storage.checkedKeys[dictionary.key] && text) {
-        // const pattern = `^${text}.+\n`;
-        const pattern = `^(?:.+\\|\\s*)?${text}.*\n.+\n`;
-        const regexp = new RegExp(pattern, 'gim');
-        const lines = dictionary.data.match(regexp);
-        if (lines) {
-          array.push({
-            name: dictionary.name,
-            count: lines.length,
-            key: dictionary.key,
-            lines: lines.slice(0, resultsMaxCount)
-          });
-        }
-      }
-    });
-    setResults(array);
+    setResults(elasticSearch(storage, search, 4));
   }, [search, storage.checkedKeys]);
 
   return (
     <div>
-      <Row gutter={20}>
-        <Col md={7}>
+      <Row gutter={26}>
+        <Col sm={24} md={9} lg={8} xl={6}>
           <Card
             style={{ marginBottom: 12 }}
             bordered={false}
             title={
               <Title level={5} strong style={{ lineHeight: 1 }}>
+                <FileSearchOutlined style={{ marginRight: 8 }} />
                 Ընտրեք բառարանը
               </Title>
             }
           >
             <DicsList />
           </Card>
-          <Space align="start">
-            <GitHubButton
-              href="https://github.com/bararan-hay/bararan-hay-website"
-              data-color-scheme="no-preference: light; light: light; dark: light;"
-              data-size="large"
-              data-icon="octicon-star"
-              data-show-count="true"
-              aria-label="Star bararan-hay/bararan-hay-website on GitHub"
-            >
-              Աստղեր
-            </GitHubButton>
-          </Space>
         </Col>
-        <Col md={14}>
-          <Form size="large">
+        <Col sm={24} md={15} lg={16} xl={12}>
+          <Form size="large" style={{ marginBottom: 15 }}>
             <Input
               allowClear
               autoFocus
@@ -80,72 +50,54 @@ export default function Home() {
               onChange={e => setSearch(e.target.value)}
             />
           </Form>
-          <Paragraph
-            style={{
-              borderRadius: 2,
-              background: '#fff',
-              padding: '20px 20px',
-              margin: '10px 0'
-            }}
-          >
-            <Title level={5}>Բարեւ սիրելի օգտատեր :)</Title>
-            Այս կայքն աշխատում է{' '}
-            <a href="https://github.com/bararan-hay" target="_blank">
-              բաց ելակոդով բառարանների
-            </a>{' '}
-            հիման վրա։ Բառարան ընտրելով դու ներբեռնում ես այն քո դիտարկիչի
-            հիշողության մեջ որտեղից էլ հետագայում կատարվում է որոնումը։
-          </Paragraph>
-
+          {!isEmpty && results.length === 0 && (
+            <Card bordered={false}>
+              <Title level={5}>
+                <BulbOutlined style={{ marginRight: 8 }} />
+                Բարեւ սիրելի օգտատեր
+              </Title>
+              Այս կայքն աշխատում է{' '}
+              <a href="https://github.com/bararan-hay" target="_blank">
+                բաց ելակոդով բառարանների
+              </a>{' '}
+              հիման վրա։ Բառարան ընտրելով դու ներբեռնում ես այն քո դիտարկիչի
+              հիշողության մեջ որտեղից էլ հետագայում կատարվում է որոնումը։
+            </Card>
+          )}
           {isEmpty && (
-            <div
-              style={{
-                borderRadius: 2,
-                background: '#fff',
-                padding: '20px 20px',
-                margin: '10px 0'
-              }}
-            >
+            <Card bordered={false}>
               <Empty
                 style={{ paddingTop: 55 }}
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                 description="Ընտրված բառարաններում այս բառը չկա ։("
               />
-            </div>
+            </Card>
           )}
-          <div style={{}}>
-            {results.map(result => (
-              <div
-                key={result.key}
-                style={{
-                  borderRadius: 2,
-                  background: '#fff',
-                  padding: '20px 20px',
-                  margin: '10px 0'
-                }}
-              >
-                <Title level={5}>
-                  <BookOutlined style={{ marginRight: 8 }} />
-                  {result.name}
-                </Title>
-                <ul style={{ padding: '10px 0 0 25px' }}>
-                  {result.lines.map((line, index) => (
-                    <li
-                      dangerouslySetInnerHTML={{
-                        __html: line.replace(/\\n/g, '\n')
-                      }}
-                      key={index}
-                      style={{
-                        marginBottom: 10,
-                        whiteSpace: 'pre-line'
-                      }}
-                    />
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {results.map(result => (
+            <Card key={result.key} bordered={false} style={{ marginBottom: 5 }}>
+              <Title level={5}>
+                <BookOutlined style={{ marginRight: 8 }} />
+                {result.name}
+              </Title>
+              <ul style={{ padding: '10px 0 0 25px' }}>
+                {result.lines.map((line, index) => (
+                  <li
+                    dangerouslySetInnerHTML={{
+                      __html: line.replace(/\\n/g, '\n')
+                    }}
+                    key={index}
+                    style={{
+                      marginBottom: 10,
+                      whiteSpace: 'pre-line',
+                      lineHeight: 1.7
+                    }}
+                  />
+                ))}
+              </ul>
+            </Card>
+          ))}
         </Col>
+        <Col sm={24} md={24} lg={24} xl={6}></Col>
       </Row>
     </div>
   );
