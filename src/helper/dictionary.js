@@ -1,7 +1,7 @@
 export const normalizeKeyword = str => {
   return String(str)
     .trim()
-    .replace(/\{|\}|\[|\]|\\|\(|\)/g, '')
+    .replace(/[*+?^${}()|[\]\\]/g, '\\$&')
     .replace(/և|եւ/g, '(և|եւ)');
 };
 
