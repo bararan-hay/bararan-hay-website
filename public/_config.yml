@@ -1,0 +1,29 @@
+# Site settings
+title: 'Բառարան.հայ | Բլոգ'
+description: 'Հայերեն առցանց բառարան'
+url: 'https://բառարան.հայ'
+
+# Build settings
+markdown: kramdown
+include:
+  - _pages
+
+# Assets
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Gems
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jekyll-seo-tag
+
+# Permalinks
+permalink: /blog/:title
+paginate_path: /page-:num/
+paginate: 20
+
+# Excludes
+exclude: [Gemfile, Gemfile.lock, components.gemspec]
