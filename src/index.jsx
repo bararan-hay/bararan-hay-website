@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import { ProvideDic } from 'providers/ProvideDics';
+import { ProvideDictionary } from 'providers/ProvideDictionary';
 import 'assets/styles/index.less';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ProvideDic>
+    <ProvideDictionary>
       <App />
-    </ProvideDic>
+    </ProvideDictionary>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -1,44 +1,53 @@
-import { useState, useEffect } from 'react';
-import { Typography, Input, Form, Row, Col, Card, Empty, Space } from 'antd';
-import {
-  BookOutlined,
-  BulbOutlined,
-  LinkOutlined,
-  FileSearchOutlined
-} from '@ant-design/icons';
-import { useDics } from 'providers/ProvideDics';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { Typography, Input, Form, Row, Col, Card, Empty } from 'antd';
+import { BulbOutlined } from '@ant-design/icons';
+import { useDictionaries } from 'providers/ProvideDictionary';
 import { elasticSearch } from 'helper/dictionary';
-import DicsList from 'components/DicsList';
+import { useQuery } from 'hooks';
+import Dictionaries from 'components/Dictionaries';
+import RightPanel from 'components/RightPanel';
+import SearchResult from 'components/SearchResult';
 
-const { Title, Link } = Typography;
+const { Title } = Typography;
 
 export default function Home() {
-  const { storage } = useDics();
+  const { storage } = useDictionaries();
   const [search, setSearch] = useState('');
   const [results, setResults] = useState([]);
+  const inputRef = useRef();
+  const query = useQuery();
 
   const isEmpty = !!search.trim() && results.length === 0;
+
+  const disabled = useMemo(
+    () => !Object.values(storage.checkedKeys).some(Boolean),
+    [storage.checkedKeys]
+  );
+
+  const onSearch = e => {
+    const value = e.target.value;
+    setSearch(value);
+    query.set('word', value);
+    window.history.replaceState(null, null, '?'.concat(query.toString()));
+  };
 
   useEffect(() => {
     setResults(elasticSearch(storage, search, 4));
   }, [search, storage.checkedKeys]);
 
+  useEffect(() => {
+    setSearch(query.get('word') || '');
+  }, []);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [storage.checkedKeys]);
+
   return (
     <div>
       <Row gutter={26}>
         <Col xs={24} sm={24} md={24} lg={8} xl={6}>
-          <Card
-            style={{ marginBottom: 12 }}
-            bordered={false}
-            title={
-              <Title level={5} strong style={{ lineHeight: 1 }}>
-                <FileSearchOutlined style={{ marginRight: 8 }} />
-                Ընտրեք բառարանը
-              </Title>
-            }
-          >
-            <DicsList />
-          </Card>
+          <Dictionaries />
         </Col>
         <Col
           xs={24}
@@ -51,11 +60,12 @@ export default function Home() {
           <Form size="large" style={{ marginBottom: 15 }}>
             <Input
               allowClear
-              autoFocus
               value={search}
+              ref={inputRef}
+              disabled={disabled}
               style={{ height: '50px', border: 'none', padding: '10px 20px' }}
-              placeholder="Մուտքագրեք բառը..."
-              onChange={e => setSearch(e.target.value)}
+              placeholder={disabled ? 'Ընտրեք բառարանը' : 'Մուտքագրեք բառը...'}
+              onChange={onSearch}
             />
           </Form>
           {!isEmpty && results.length === 0 && (
@@ -77,60 +87,14 @@ export default function Home() {
               <Empty
                 style={{ paddingTop: 55 }}
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description="Ընտրված բառարաններում այս բառը չկա ։("
+                description="Ընտրված բառարաններում այս բառը չկա"
               />
             </Card>
           )}
-          {results.map(result => (
-            <Card key={result.key} bordered={false} style={{ marginBottom: 5 }}>
-              <Title level={5}>
-                <BookOutlined style={{ marginRight: 8 }} />
-                {result.name}
-              </Title>
-              <ul style={{ padding: '10px 0 0 25px' }}>
-                {result.lines.map((line, index) => (
-                  <li
-                    dangerouslySetInnerHTML={{
-                      __html: line.replace(/\\n/g, '\n')
-                    }}
-                    key={index}
-                    style={{
-                      marginBottom: 10,
-                      whiteSpace: 'pre-line',
-                      lineHeight: 1.7
-                    }}
-                  />
-                ))}
-              </ul>
-            </Card>
-          ))}
+          <SearchResult results={results} />
         </Col>
         <Col xs={24} sm={24} md={24} lg={8} xl={6}>
-          <Card
-            style={{ marginBottom: 12 }}
-            bordered={false}
-            title={
-              <Title level={5} strong style={{ lineHeight: 1 }}>
-                <LinkOutlined style={{ marginRight: 8 }} />
-                Օգտակար հղումներ
-              </Title>
-            }
-          >
-            <Space direction="vertical">
-              <Link
-                target="_blank"
-                href="https://hy.wikibooks.org/wiki/%D5%80%D5%A1%D5%B5%D5%A5%D6%80%D5%A5%D5%B6%D5%B8%D6%82%D5%B4_%D5%BF%D5%A1%D6%80%D5%A1%D5%AE%D5%BE%D5%A1%D5%AE_%D5%BD%D5%AD%D5%A1%D5%AC%D5%B6%D5%A5%D6%80"
-              >
-                Հայերենում տարածված սխալներ
-              </Link>
-              <Link
-                target="_blank"
-                href="https://hy.wikipedia.org/wiki/%D5%8E%D5%AB%D6%84%D5%AB%D5%BA%D5%A5%D5%A4%D5%AB%D5%A1:%D4%BC%D5%A5%D5%A6%D5%BE%D5%AB_%D5%AF%D5%B8%D5%B4%D5%AB%D5%BF%D5%A5%D5%AB_%D5%B0%D5%B8%D6%80%D5%A4%D5%B8%D6%80%D5%A1%D5%AF%D5%B6%D5%A5%D6%80"
-              >
-                Լեզվի կոմիտեի հորդորակներ
-              </Link>
-            </Space>
-          </Card>
+          <RightPanel />
         </Col>
       </Row>
     </div>

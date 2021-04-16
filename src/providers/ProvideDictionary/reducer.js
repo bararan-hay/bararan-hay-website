@@ -13,7 +13,7 @@ export default function reducer(state, action) {
           ...state.checkedKeys,
           [action.payload.key]: true
         },
-        dics: state.dics.map(dic =>
+        dictionaries: state.dictionaries.map(dic =>
           dic.key === action.payload.key ? action.payload : dic
         )
       };
@@ -24,7 +24,7 @@ export default function reducer(state, action) {
           ...state.checkedKeys,
           [action.payload.key]: false
         },
-        dics: state.dics.map(dic =>
+        dictionaries: state.dictionaries.map(dic =>
           dic.key === action.payload.key ? action.payload : dic
         )
       };

@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Checkbox, Spin } from 'antd';
-import { useDics } from 'providers/ProvideDics';
+import { Checkbox, Spin, Card, Typography } from 'antd';
+import { FileSearchOutlined } from '@ant-design/icons';
+import { useDictionaries } from 'providers/ProvideDictionary';
+
+const { Title } = Typography;
 
 const Item = ({ dictionary }) => {
-  const { storage, enable, disable } = useDics();
+  const { storage, enable, disable } = useDictionaries();
   const [loading, setLoading] = useState(false);
 
   const onCheck = e => {
@@ -35,8 +38,8 @@ const Item = ({ dictionary }) => {
   );
 };
 
-export default function List() {
-  const { storage, load } = useDics();
+export default function Dictionaries() {
+  const { storage, load } = useDictionaries();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -46,10 +49,21 @@ export default function List() {
   }, []);
 
   return (
-    <Spin spinning={loading}>
-      {storage.dics.map(dictionary => (
-        <Item key={dictionary.key} dictionary={dictionary} />
-      ))}
-    </Spin>
+    <Card
+      style={{ marginBottom: 12 }}
+      bordered={false}
+      title={
+        <Title level={5} strong style={{ lineHeight: 1 }}>
+          <FileSearchOutlined style={{ marginRight: 8 }} />
+          Ընտրեք բառարանը
+        </Title>
+      }
+    >
+      <Spin spinning={loading}>
+        {storage.dictionaries.map(dictionary => (
+          <Item key={dictionary.key} dictionary={dictionary} />
+        ))}
+      </Spin>
+    </Card>
   );
 }

@@ -17,7 +17,7 @@ export const getPatternRegExp = (path, word) => {
 
 export const elasticSearch = (storage, keyword, maxCount) => {
   const array = [];
-  storage.dics.forEach(dictionary => {
+  storage.dictionaries.forEach(dictionary => {
     const word = normalizeKeyword(keyword);
     if (storage.checkedKeys[dictionary.key] && word) {
       const regexp = getPatternRegExp(dictionary.location, word);
