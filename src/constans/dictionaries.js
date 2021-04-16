@@ -34,5 +34,10 @@ export const DICS = [
     name: 'Տոկիպոնա-հայերեն բառարան',
     location:
       'https://raw.githubusercontent.com/bararan-hay/toki-pona-armenian/master/toki-pona-armenian.babylon'
+  },{
+    key: 'hy-borrowings',
+    name: 'Լեզվի կոմիտեի հորդորակներ, համարժեքներ',
+    location:
+      'https://raw.githubusercontent.com/bararan-hay/hy-borrowings/main/dictionary.tab'
   }
 ];

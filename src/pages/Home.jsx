@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Typography, Input, Form, Row, Col, Card, Empty } from 'antd';
+import { Typography, Input, Form, Row, Col, Card, Empty, Space } from 'antd';
 import {
   BookOutlined,
   BulbOutlined,
+  LinkOutlined,
   FileSearchOutlined
 } from '@ant-design/icons';
 import { useDics } from 'providers/ProvideDics';
 import { elasticSearch } from 'helper/dictionary';
 import DicsList from 'components/DicsList';
 
-const { Title } = Typography;
+const { Title, Link } = Typography;
 
 export default function Home() {
   const { storage } = useDics();
@@ -25,7 +26,7 @@ export default function Home() {
   return (
     <div>
       <Row gutter={26}>
-        <Col sm={24} md={9} lg={8} xl={6}>
+        <Col xs={24} sm={24} md={24} lg={8} xl={6}>
           <Card
             style={{ marginBottom: 12 }}
             bordered={false}
@@ -39,7 +40,14 @@ export default function Home() {
             <DicsList />
           </Card>
         </Col>
-        <Col sm={24} md={15} lg={16} xl={12}>
+        <Col
+          xs={24}
+          sm={24}
+          md={24}
+          lg={16}
+          xl={12}
+          style={{ marginBottom: 12 }}
+        >
           <Form size="large" style={{ marginBottom: 15 }}>
             <Input
               allowClear
@@ -60,7 +68,7 @@ export default function Home() {
               <a href="https://github.com/bararan-hay" target="_blank">
                 բաց ելակոդով բառարանների
               </a>{' '}
-              հիման վրա։ Բառարան ընտրելով դու ներբեռնում ես այն քո դիտարկիչի
+              հիման վրա։ Բառարան ընտրելով դուք ներբեռնում եք այն Ձեր դիտարկիչի
               հիշողության մեջ որտեղից էլ հետագայում կատարվում է որոնումը։
             </Card>
           )}
@@ -97,7 +105,33 @@ export default function Home() {
             </Card>
           ))}
         </Col>
-        <Col sm={24} md={24} lg={24} xl={6}></Col>
+        <Col xs={24} sm={24} md={24} lg={8} xl={6}>
+          <Card
+            style={{ marginBottom: 12 }}
+            bordered={false}
+            title={
+              <Title level={5} strong style={{ lineHeight: 1 }}>
+                <LinkOutlined style={{ marginRight: 8 }} />
+                Օգտակար հղումներ
+              </Title>
+            }
+          >
+            <Space direction="vertical">
+              <Link
+                target="_blank"
+                href="https://hy.wikibooks.org/wiki/%D5%80%D5%A1%D5%B5%D5%A5%D6%80%D5%A5%D5%B6%D5%B8%D6%82%D5%B4_%D5%BF%D5%A1%D6%80%D5%A1%D5%AE%D5%BE%D5%A1%D5%AE_%D5%BD%D5%AD%D5%A1%D5%AC%D5%B6%D5%A5%D6%80"
+              >
+                Հայերենում տարածված սխալներ
+              </Link>
+              <Link
+                target="_blank"
+                href="https://hy.wikipedia.org/wiki/%D5%8E%D5%AB%D6%84%D5%AB%D5%BA%D5%A5%D5%A4%D5%AB%D5%A1:%D4%BC%D5%A5%D5%A6%D5%BE%D5%AB_%D5%AF%D5%B8%D5%B4%D5%AB%D5%BF%D5%A5%D5%AB_%D5%B0%D5%B8%D6%80%D5%A4%D5%B8%D6%80%D5%A1%D5%AF%D5%B6%D5%A5%D6%80"
+              >
+                Լեզվի կոմիտեի հորդորակներ
+              </Link>
+            </Space>
+          </Card>
+        </Col>
       </Row>
     </div>
   );
