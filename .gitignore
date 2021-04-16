@@ -1,9 +1,0 @@
-_site
-.DS_Store
-*.swp
-.sass-cache
-.idea
-.bundle
-vendor
-.jekyll-cache
-*~
