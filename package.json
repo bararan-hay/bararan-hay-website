@@ -24,7 +24,8 @@
     "start": "craco start",
     "build": "craco build",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b master -d build"
+    "deploy": "gh-pages -b master -d build",
+    "check": "tsc ../src"
   },
   "eslintConfig": {
     "extends": [
