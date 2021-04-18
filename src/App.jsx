@@ -1,5 +1,5 @@
 import Home from './pages/Home';
-import { Layout, Row, Col } from 'antd';
+import { Layout, Row, Col, Space } from 'antd';
 import Logo from 'assets/images/logo.svg';
 import GitHubButton from 'react-github-btn';
 
@@ -21,15 +21,24 @@ function App() {
               <img src={Logo} alt="Բառարան.հայ" width="40" />
             </Col>
             <Col style={{ lineHeight: 1 }}>
-              <GitHubButton
-                href="https://github.com/bararan-hay/bararan-hay-website"
-                data-color-scheme="no-preference: light; light: light; dark: light;"
-                data-size="large"
-                data-show-count="true"
-                aria-label="Star bararan-hay/bararan-hay-website on GitHub"
-              >
-                Աստղեր
-              </GitHubButton>
+              <Space>
+                <GitHubButton
+                  href="https://github.com/bararan-hay/bararan-hay-website"
+                  data-color-scheme="no-preference: light; light: light; dark: light;"
+                  data-size="large"
+                  data-show-count="true"
+                  aria-label="Star bararan-hay/bararan-hay-website on GitHub"
+                >
+                  Աստղեր
+                </GitHubButton>
+                <a href="https://www.buymeacoffee.com/tigran" target="_blank">
+                  <img
+                    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                    alt="Buy Me A Coffee"
+                    style={{ width: 102, paddingBottom: 2 }}
+                  />
+                </a>
+              </Space>
             </Col>
           </Row>
         </Container>
