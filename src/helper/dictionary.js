@@ -10,6 +10,7 @@ export const getPatternRegExp = (path, word) => {
   const type = path.substr(lastDotIndex + 1);
   const pattern = {
     tab: `^${word}.+\n`,
+    txt: `^${word}.+\n`,
     babylon: `^(?:.+\\|\\s*)?${word}.*\n.+\n`
   };
   return new RegExp(pattern[type], 'gim');

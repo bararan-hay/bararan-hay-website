@@ -25,8 +25,13 @@
     "location": "https://raw.githubusercontent.com/bararan-hay/our-victories-dictionary/main/our-victories-dictionary.tab"
   },
   {
+    "key": "hy-ru-dictionary",
+    "name": "Հայերեն-ռուսերեն բառարան",
+    "location": "https://raw.githubusercontent.com/bararan-hay/hy-ru-dictionary/main/ArmRus.txt"
+  },
+  {
     "key": "toki-pona-armenian",
-    "name": "Տոկիպոնա-հայերեն բառարան",
+    "name": "Տոկի պոնա-հայերեն բառարան",
     "location": "https://raw.githubusercontent.com/bararan-hay/toki-pona-armenian/master/toki-pona-armenian.babylon"
   },
   {
