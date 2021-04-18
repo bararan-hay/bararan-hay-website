@@ -38,5 +38,10 @@
     "key": "haykazian-dictionary",
     "name": "Հայկազեան բացատրական բառարան",
     "location": "https://raw.githubusercontent.com/bararan-hay/enacademic_to_stardict/master/armenian_enacademic.tab"
+  },
+  {
+    "key": "nahapet-kuchak-dictionary",
+    "name": "Հայրէններու բուրաստանը - Նահապետ Քուչակ",
+    "location": "https://raw.githubusercontent.com/bararan-hay/nahapet-kuchak-dictionary/main/dictionary.txt"
   }
 ]
