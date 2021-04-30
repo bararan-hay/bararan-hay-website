@@ -19,10 +19,9 @@ export default function Home() {
 
   const isEmpty = !!search.trim() && results.length === 0;
 
-  const disabled = useMemo(
-    () => !Object.values(storage.checkedKeys).some(Boolean),
-    [storage.checkedKeys]
-  );
+  const disabled = useMemo(() => !Object.values(storage.checkedKeys).some(Boolean), [
+    storage.checkedKeys
+  ]);
 
   const onSearch = e => {
     const value = e.target.value;
@@ -49,14 +48,7 @@ export default function Home() {
         <Col xs={24} sm={24} md={24} lg={8} xl={6}>
           <Dictionaries />
         </Col>
-        <Col
-          xs={24}
-          sm={24}
-          md={24}
-          lg={16}
-          xl={12}
-          style={{ marginBottom: 12 }}
-        >
+        <Col xs={24} sm={24} md={24} lg={16} xl={12} style={{ marginBottom: 12 }}>
           <Form size="large" style={{ marginBottom: 15 }}>
             <Input
               allowClear
@@ -78,8 +70,8 @@ export default function Home() {
               <a href="https://github.com/bararan-hay" target="_blank">
                 բաց ելակոդով բառարանների
               </a>{' '}
-              հիման վրա։ Բառարան ընտրելով դուք ներբեռնում եք այն Ձեր դիտարկիչի
-              հիշողության մեջ որտեղից էլ հետագայում կատարվում է որոնումը։
+              հիման վրա։ Բառարան ընտրելով դուք ներբեռնում եք այն Ձեր դիտարկիչի հիշողության մեջ
+              որտեղից էլ հետագայում կատարվում է որոնումը։
             </Card>
           )}
           {isEmpty && (

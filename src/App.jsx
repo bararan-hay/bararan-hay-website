@@ -5,9 +5,7 @@ import GitHubButton from 'react-github-btn';
 
 const Container = props => {
   return (
-    <div style={{ maxWidth: 1500, margin: '0 auto', padding: '0 30px' }}>
-      {props.children}
-    </div>
+    <div style={{ maxWidth: 1500, margin: '0 auto', padding: '0 30px' }}>{props.children}</div>
   );
 };
 
@@ -31,13 +29,6 @@ function App() {
                 >
                   Աստղեր
                 </GitHubButton>
-                <a href="https://www.buymeacoffee.com/tigran" target="_blank">
-                  <img
-                    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-                    alt="Buy Me A Coffee"
-                    style={{ width: 102, paddingBottom: 2 }}
-                  />
-                </a>
               </Space>
             </Col>
           </Row>
