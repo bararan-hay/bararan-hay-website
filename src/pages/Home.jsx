@@ -19,9 +19,10 @@ export default function Home() {
 
   const isEmpty = !!search.trim() && results.length === 0;
 
-  const disabled = useMemo(() => !Object.values(storage.checkedKeys).some(Boolean), [
-    storage.checkedKeys
-  ]);
+  const disabled = useMemo(
+    () => !Object.values(storage.checkedKeys).some(Boolean),
+    [storage.checkedKeys]
+  );
 
   const onSearch = e => {
     const value = e.target.value;

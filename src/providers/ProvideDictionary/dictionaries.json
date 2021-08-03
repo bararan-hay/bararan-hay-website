@@ -1,47 +1,57 @@
 [
   {
     "key": "baratian-dictionary",
-    "name": "Բարաթյանի անգլերեն-հայերեն բառարան",
+    "name": "Անգլերեն-հայերեն բառարան (Ն.Ռ. Բարաթյան)",
     "location": "https://raw.githubusercontent.com/bararan-hay/baratian-dictionary/master/baratyan-dictionary.tab"
   },
   {
     "key": "hy-borrowings",
-    "name": "Օտար բառերի հայերեն համարժեքներ",
+    "name": "Օտար բառերի հայերեն համարժեքներ (Լեզվի կոմիտե)",
     "location": "https://raw.githubusercontent.com/bararan-hay/hy-borrowings/main/dictionary.tab"
   },
   {
     "key": "armdicto-dictionary",
-    "name": "Armdicto անգլերեն-հայերեն բառարան",
+    "name": "Անգլերեն-հայերեն բառարան (Armdicto)",
     "location": "https://raw.githubusercontent.com/bararan-hay/freearmdicto/master/armdicto.tab"
   },
   {
     "key": "en-hy-military-dictionary",
-    "name": "Ռազմական տերմինների անգլերեն-հայերեն համառոտ բացատրական բառարան",
+    "name": "Ռազմական տերմինների անգլերեն-հայերեն համառոտ բացատրական բառարան (Ա. Խանջյան)",
     "location": "https://raw.githubusercontent.com/bararan-hay/en-hy-military-dictionary/main/en-hy-military-dictionary.tab"
   },
   {
     "key": "our-victories-dictionary",
-    "name": "Ռազմական տերմինների բացատրական բառարան",
+    "name": "Ռազմական տերմինների բացատրական բառարան («Մեր հաղթանակները»)",
     "location": "https://raw.githubusercontent.com/bararan-hay/our-victories-dictionary/main/our-victories-dictionary.tab"
   },
   {
     "key": "hy-ru-dictionary",
-    "name": "Հայերեն-ռուսերեն բառարան",
+    "name": "Հայերեն-ռուսերեն բառարան (Հ. Աճառյանի Անվան Լեզվի Ինստիտուտ)",
     "location": "https://raw.githubusercontent.com/bararan-hay/hy-ru-dictionary/main/ArmRus.txt"
   },
   {
-    "key": "toki-pona-armenian",
-    "name": "Տոկի պոնա-հայերեն բառարան",
-    "location": "https://raw.githubusercontent.com/bararan-hay/toki-pona-armenian/master/toki-pona-armenian.babylon"
-  },
-  {
     "key": "haykazian-dictionary",
-    "name": "Հայկազեան բացատրական բառարան",
+    "name": "Բացատրական բառարան (Հայկազեան)",
     "location": "https://raw.githubusercontent.com/bararan-hay/enacademic_to_stardict/master/armenian_enacademic.tab"
   },
   {
     "key": "nahapet-kuchak-dictionary",
-    "name": "Հայրէններու բուրաստանը - Նահապետ Քուչակ",
+    "name": "Հայրէններու բուրաստանը (Նահապետ Քուչակ)",
     "location": "https://raw.githubusercontent.com/bararan-hay/nahapet-kuchak-dictionary/main/dictionary.txt"
+  },
+  {
+    "key": "toki-pona-armenian",
+    "name": "Տոկի պոնա-հայերեն բառարան (kamee)",
+    "location": "https://raw.githubusercontent.com/bararan-hay/toki-pona-armenian/master/toki-pona-armenian.babylon"
+  },
+  {
+    "key": "noch-en-hy",
+    "name": "Անգլերեն-հայերեն տեխնիկական բառարան (noch)",
+    "location": "https://raw.githubusercontent.com/bararan-hay/noch-armenian-dictionary/master/noch_en-hy.tab"
+  },
+  {
+    "key": "noch-hy-en",
+    "name": "Հայերեն-անգլերեն տեխնիկական բառարան (noch)",
+    "location": "https://github.com/bararan-hay/noch-armenian-dictionary/blob/master/noch_hy-en.babylon"
   }
 ]
