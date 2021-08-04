@@ -1,7 +1,7 @@
 import Home from './pages/Home';
 import { Layout, Row, Col, Space } from 'antd';
 import Logo from 'assets/images/logo.svg';
-import GitHubButton from 'react-github-btn';
+import PatreonButton from 'components/PatreonButton';
 
 const Container = props => {
   return (
@@ -20,15 +20,7 @@ function App() {
             </Col>
             <Col style={{ lineHeight: 1 }}>
               <Space>
-                <GitHubButton
-                  href="https://github.com/bararan-hay/bararan-hay-website"
-                  data-color-scheme="no-preference: light; light: light; dark: light;"
-                  data-size="large"
-                  data-show-count="true"
-                  aria-label="Star bararan-hay/bararan-hay-website on GitHub"
-                >
-                  Աստղեր
-                </GitHubButton>
+                <PatreonButton />
               </Space>
             </Col>
           </Row>
