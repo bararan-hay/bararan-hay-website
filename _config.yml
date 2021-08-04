@@ -27,3 +27,5 @@ paginate: 20
 
 # Excludes
 exclude: [Gemfile, Gemfile.lock, components.gemspec]
+
+includes: ['.github']
