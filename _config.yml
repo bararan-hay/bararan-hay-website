@@ -7,7 +7,6 @@ url: 'https://բառարան.հայ'
 markdown: kramdown
 include:
   - _pages
-  - .github
 
 # Assets
 sass:
