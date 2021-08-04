@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/static/css/main.71ca4fe2.chunk.css",
-    "main.js": "/static/js/main.62347a03.chunk.js",
-    "main.js.map": "/static/js/main.62347a03.chunk.js.map",
+    "main.js": "/static/js/main.d1cac3f6.chunk.js",
+    "main.js.map": "/static/js/main.d1cac3f6.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.0c2df330.js",
     "runtime-main.js.map": "/static/js/runtime-main.0c2df330.js.map",
-    "static/css/2.2769f0b5.chunk.css": "/static/css/2.2769f0b5.chunk.css",
+    "static/css/2.17b9477c.chunk.css": "/static/css/2.17b9477c.chunk.css",
     "static/js/2.5972b92a.chunk.js": "/static/js/2.5972b92a.chunk.js",
     "static/js/2.5972b92a.chunk.js.map": "/static/js/2.5972b92a.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/2.2769f0b5.chunk.css.map": "/static/css/2.2769f0b5.chunk.css.map",
+    "static/css/2.17b9477c.chunk.css.map": "/static/css/2.17b9477c.chunk.css.map",
     "static/css/main.71ca4fe2.chunk.css.map": "/static/css/main.71ca4fe2.chunk.css.map",
     "static/js/2.5972b92a.chunk.js.LICENSE.txt": "/static/js/2.5972b92a.chunk.js.LICENSE.txt",
     "static/media/index.less": "/static/media/NotoSansArmenian-Regular.e792de0c.ttf",
@@ -17,9 +17,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.0c2df330.js",
-    "static/css/2.2769f0b5.chunk.css",
+    "static/css/2.17b9477c.chunk.css",
     "static/js/2.5972b92a.chunk.js",
     "static/css/main.71ca4fe2.chunk.css",
-    "static/js/main.62347a03.chunk.js"
+    "static/js/main.d1cac3f6.chunk.js"
   ]
 }
