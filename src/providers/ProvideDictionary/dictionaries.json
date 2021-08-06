@@ -50,6 +50,11 @@
     "location": "https://raw.githubusercontent.com/bararan-hay/hy-manana-dictionary/main/manana-dictionary.txt"
   },
   {
+    "key": "hy-divan",
+    "name": "Դիւան։ Արեւմտահայերենի բառարան (Ե. Կարնեցի)",
+    "location": "https://raw.githubusercontent.com/bararan-hay/hy-divan-dictionary/main/hy-divan-dictionary.txt"
+  },
+  {
     "key": "toki-pona-armenian",
     "name": "Տոկի պոնա-հայերեն բառարան (kamee)",
     "location": "https://raw.githubusercontent.com/bararan-hay/toki-pona-armenian/master/toki-pona-armenian.babylon"
