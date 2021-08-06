@@ -40,6 +40,16 @@
     "location": "https://raw.githubusercontent.com/bararan-hay/nahapet-kuchak-dictionary/main/dictionary.txt"
   },
   {
+    "key": "david-of-sasun",
+    "name": "Սասունցի Դավիթ էպոսի բառարան (Ս. Տարոնցի)",
+    "location": "https://raw.githubusercontent.com/bararan-hay/david-of-sasun-dictionary/main/david-of-sasun-dictionary.tab"
+  },
+  {
+    "key": "hy-manana",
+    "name": "Մանանայ (Գ. Սրուանձտեանց)",
+    "location": "https://raw.githubusercontent.com/bararan-hay/hy-manana-dictionary/main/manana-dictionary.txt"
+  }
+  {
     "key": "toki-pona-armenian",
     "name": "Տոկի պոնա-հայերեն բառարան (kamee)",
     "location": "https://raw.githubusercontent.com/bararan-hay/toki-pona-armenian/master/toki-pona-armenian.babylon"
@@ -53,10 +63,5 @@
     "key": "noch-hy-en",
     "name": "Հայերեն-անգլերեն տեխնիկական բառարան (noch)",
     "location": "https://raw.githubusercontent.com/bararan-hay/noch-armenian-dictionary/master/noch_hy-en.babylon"
-  },
-  {
-    "key": "david-of-sasun",
-    "name": "Սասունցի Դավիթ էպոսի բառարան (Ս. Տարոնցի)",
-    "location": "https://raw.githubusercontent.com/bararan-hay/david-of-sasun-dictionary/main/david-of-sasun-dictionary.tab"
   }
 ]
