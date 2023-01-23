@@ -1,21 +1,21 @@
 import { Typography, Card, Skeleton, Empty } from 'antd';
 import { BookOutlined } from '@ant-design/icons';
-import { useDictionaries } from 'providers/ProvideDictionary';
+import { useBooks } from 'providers/ProvideBook';
 
 const { Title } = Typography;
 
 const SearchResult = () => {
-  const { dictionaryStorage } = useDictionaries();
+  const { bookStorage } = useBooks();
 
-  const dictionaries = dictionaryStorage.dictionaries.filter(r => r.dictionaries.length > 0);
+  const books = bookStorage.books.filter(r => r.words?.length > 0);
 
   return (
     <>
-      {dictionaryStorage.loading ? (
+      {bookStorage.loading ? (
         <Card bordered={false}>
           <Skeleton active />
         </Card>
-      ) : dictionaries.length === 0 ? (
+      ) : books.length === 0 ? (
         <Card bordered={false}>
           <Empty
             style={{ paddingTop: 55 }}
@@ -24,8 +24,8 @@ const SearchResult = () => {
           />
         </Card>
       ) : (
-        dictionaries
-          .filter(r => r.dictionaries.length > 0)
+        books
+          .filter(r => r.words.length > 0)
           .map(result => (
             <Card key={result._id} bordered={false} style={{ marginBottom: 5 }}>
               <Title level={5}>
@@ -33,7 +33,7 @@ const SearchResult = () => {
                 {result.name}
               </Title>
               <ul style={{ padding: '10px 0 0 25px' }}>
-                {result.dictionaries.map((item, index) => (
+                {result.words.map((item, index) => (
                   <li
                     key={index}
                     style={{

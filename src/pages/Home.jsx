@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Typography, Input, Form, Row, Col, Card, Spin } from 'antd';
 import { BulbOutlined } from '@ant-design/icons';
-import { useDictionaries } from 'providers/ProvideDictionary';
 import { useBooks } from 'providers/ProvideBook';
 import { useQuery } from 'hooks';
 import SearchResult from 'components/SearchResult';
@@ -9,8 +8,7 @@ import SearchResult from 'components/SearchResult';
 const { Title, Paragraph } = Typography;
 
 export default function Home() {
-  const { bookStorage, loadBooks } = useBooks();
-  const { search, resetDictionary } = useDictionaries();
+  const { bookStorage, loadBooks, searchWord } = useBooks();
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef();
   const query = useQuery();
@@ -24,9 +22,9 @@ export default function Home() {
     setInputValue(value);
     query.set('word', value);
     if (value) {
-      search(value);
+      searchWord(value);
     } else {
-      resetDictionary();
+      // resetDictionary();
     }
     window.history.replaceState(null, null, '?'.concat(query.toString()));
   };
@@ -34,7 +32,7 @@ export default function Home() {
   useEffect(() => {
     const value = query.get('word');
     if (value) {
-      search(value);
+      searchWord(value);
       setInputValue(value);
     }
   }, []);
@@ -46,7 +44,7 @@ export default function Home() {
   return (
     <div>
       <Row gutter={26}>
-        <Col xs={24} sm={24} md={24} lg={8} xl={6}></Col>
+        <Col xs={24} sm={24} md={24} lg={4} xl={6}></Col>
         <Col xs={24} sm={24} md={24} lg={16} xl={12} style={{ marginBottom: 12 }}>
           <Form size="large" style={{ marginBottom: 15 }}>
             <Input
@@ -81,7 +79,7 @@ export default function Home() {
             <SearchResult />
           )}
         </Col>
-        <Col xs={24} sm={24} md={24} lg={8} xl={6}></Col>
+        <Col xs={24} sm={24} md={24} lg={4} xl={6}></Col>
       </Row>
     </div>
   );

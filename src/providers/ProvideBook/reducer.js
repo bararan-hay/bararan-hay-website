@@ -3,7 +3,6 @@ export default function reducer(state, action) {
     case 'setBooks':
       return {
         ...state,
-        loading: false,
         ...action.payload
       };
     default:

@@ -32,8 +32,27 @@ function useProvideBook() {
     });
   }, []);
 
+  const searchWord = useCallback(keyword => {
+    dispatch({
+      type: 'setBooks',
+      payload: {
+        loading: true
+      }
+    });
+    return axios.post(process.env.REACT_APP_API + '/books/search', { keyword }).then(response => {
+      return dispatch({
+        type: 'setBooks',
+        payload: {
+          books: response.data,
+          loading: false
+        }
+      });
+    });
+  }, []);
+
   return {
     bookStorage,
+    searchWord,
     loadBooks
   };
 }
