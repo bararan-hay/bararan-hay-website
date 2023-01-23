@@ -1,52 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Checkbox, Spin, Card, Typography } from 'antd';
+import { List, Spin, Card, Typography } from 'antd';
 import { FileSearchOutlined } from '@ant-design/icons';
-import { useDictionaries } from 'providers/ProvideDictionary';
+import { useBooks } from 'providers/ProvideBook';
 
 const { Title } = Typography;
 
-const Item = ({ dictionary }) => {
-  const { storage, enable, disable } = useDictionaries();
-  const [loading, setLoading] = useState(false);
-
-  const onCheck = e => {
-    if (e.target.checked) {
-      setLoading(true);
-      enable(dictionary).then(response => {
-        setLoading(false);
-        return response;
-      });
-    } else {
-      disable(dictionary);
-    }
-  };
-
-  return (
-    <Spin spinning={loading}>
-      <Checkbox
-        onChange={onCheck}
-        checked={storage.checkedKeys[dictionary.key]}
-        style={{
-          display: 'flex',
-          margin: '0 0 14px 0',
-          alignItems: 'flex-start'
-        }}
-      >
-        <span style={{ top: -1, position: 'relative' }}>{dictionary.name}</span>
-      </Checkbox>
-    </Spin>
-  );
-};
-
 export default function Dictionaries() {
-  const { storage, load } = useDictionaries();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    load().then(() => {
-      setLoading(false);
-    });
-  }, []);
+  const { bookStorage, loadBooks } = useBooks();
 
   return (
     <Card
@@ -59,10 +19,12 @@ export default function Dictionaries() {
         </Title>
       }
     >
-      <Spin spinning={loading}>
-        {storage.dictionaries.map(dictionary => (
-          <Item key={dictionary.key} dictionary={dictionary} />
-        ))}
+      <Spin spinning={bookStorage.loading}>
+        <List size="small">
+          {bookStorage.books.map(book => (
+            <List.Item key={book._id}>{book.name}</List.Item>
+          ))}
+        </List>
       </Spin>
     </Card>
   );

@@ -1,7 +1,6 @@
 import Home from './pages/Home';
 import { Layout, Row, Col, Space } from 'antd';
 import Logo from 'assets/images/logo.svg';
-import PatreonButton from 'components/PatreonButton';
 
 const Container = props => {
   return (
@@ -18,11 +17,7 @@ function App() {
             <Col flex="auto">
               <img src={Logo} alt="Բառարան.հայ" width="40" />
             </Col>
-            <Col style={{ lineHeight: 1 }}>
-              <Space>
-                <PatreonButton />
-              </Space>
-            </Col>
+            <Col style={{ lineHeight: 1 }}></Col>
           </Row>
         </Container>
       </Layout.Header>

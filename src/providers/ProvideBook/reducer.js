@@ -1,8 +1,9 @@
 export default function reducer(state, action) {
   switch (action.type) {
-    case 'setDictionaries':
+    case 'setBooks':
       return {
         ...state,
+        loading: false,
         ...action.payload
       };
     default:
