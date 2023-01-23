@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { Typography, Input, Form, Row, Col, Card } from 'antd';
+import { Typography, Input, Form, Row, Col, Card, Spin } from 'antd';
 import { BulbOutlined } from '@ant-design/icons';
 import { useDictionaries } from 'providers/ProvideDictionary';
 import { useBooks } from 'providers/ProvideBook';
 import { useQuery } from 'hooks';
 import SearchResult from 'components/SearchResult';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 export default function Home() {
   const { bookStorage, loadBooks } = useBooks();
@@ -64,12 +64,18 @@ export default function Home() {
                 <BulbOutlined style={{ marginRight: 8 }} />
                 Բարեւ սիրելի օգտատեր
               </Title>
-              Այս կայքն աշխատում է{' '}
-              <a href="https://github.com/bararan-hay" target="_blank">
-                բաց ելակոդով բառարանների
-              </a>{' '}
-              հիման վրա։ Բառարան ընտրելով դուք ներբեռնում եք այն Ձեր դիտարկիչի հիշողության մեջ
-              որտեղից էլ հետագայում կատարվում է որոնումը։
+              <Paragraph>
+                Սա ազատ ելակոդով բառարանների շտեմարան է։ Այն բաղկացած է հետեւյալ բառարաններից՝
+              </Paragraph>
+              {bookStorage.loading ? (
+                <Spin />
+              ) : (
+                <ul>
+                  {bookStorage.books.map(book => (
+                    <li key={book._id}>{book.name}</li>
+                  ))}
+                </ul>
+              )}
             </Card>
           ) : (
             <SearchResult />
