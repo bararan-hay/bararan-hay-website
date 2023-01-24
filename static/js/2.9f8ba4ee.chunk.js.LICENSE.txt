@@ -5,10 +5,18 @@ object-assign
 */
 
 /*!
-  Copyright (c) 2018 Jed Watson.
-  Licensed under the MIT License (MIT), see
-  http://jedwatson.github.io/classnames
+	Copyright (c) 2018 Jed Watson.
+	Licensed under the MIT License (MIT), see
+	http://jedwatson.github.io/classnames
 */
+
+/*!
+ * github-buttons v2.22.3
+ * (c) 2023 なつき
+ * @license BSD-2-Clause
+ */
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /** @license React v0.20.2
  * scheduler.production.min.js
