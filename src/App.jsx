@@ -35,7 +35,12 @@ function App() {
           >
             Star
           </GitHubButton>
-          <Typography.Text>Հեղինակ՝ Տիգրան Սիմոնյան</Typography.Text>
+          <Typography.Text>
+            Հեղինակ՝{' '}
+            <a target="_blank" href="https://tigransimonyan.com/about">
+              Տիգրան Սիմոնյան
+            </a>
+          </Typography.Text>
           <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">
             <img
               alt="Creative Commons License"
