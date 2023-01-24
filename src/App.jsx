@@ -1,5 +1,5 @@
 import Home from './pages/Home';
-import { Layout } from 'antd';
+import { Layout, Typography, Space } from 'antd';
 import Logo from 'assets/images/logo.svg';
 import GitHubButton from 'react-github-btn';
 
@@ -24,16 +24,25 @@ function App() {
           <Home />
         </Container>
       </Layout.Content>
-      <Layout.Footer>
-        <GitHubButton
-          href="https://github.com/bararan-hay/bararan-hay-website"
-          data-icon="octicon-star"
-          data-size="large"
-          data-show-count="true"
-          aria-label="Star buttons/github-buttons on GitHub"
-        >
-          Star
-        </GitHubButton>
+      <Layout.Footer style={{ textAlign: 'center' }}>
+        <Space align="center" wrap size="large">
+          <GitHubButton
+            href="https://github.com/bararan-hay/bararan-hay-website"
+            data-icon="octicon-star"
+            data-size="large"
+            data-show-count="true"
+            aria-label="Star buttons/github-buttons on GitHub"
+          >
+            Star
+          </GitHubButton>
+          <Typography.Text>Հեղինակ՝ Տիգրան Սիմոնյան</Typography.Text>
+          <a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nc/4.0/">
+            <img
+              alt="Creative Commons License"
+              src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png"
+            />
+          </a>
+        </Space>
       </Layout.Footer>
     </Layout>
   );

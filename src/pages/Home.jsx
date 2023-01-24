@@ -1,14 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Typography, Input, Form, Row, Col, Card, Spin } from 'antd';
 import { BulbOutlined } from '@ant-design/icons';
 import { useBooks } from 'providers/ProvideBook';
+import debounce from 'lodash.debounce';
 import { useQuery } from 'hooks';
 import SearchResult from 'components/SearchResult';
 
 const { Title, Paragraph } = Typography;
 
 export default function Home() {
-  const { bookStorage, loadBooks, searchWord } = useBooks();
+  const { bookStorage, loadBooks, searchWord, resetBooks } = useBooks();
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef();
   const query = useQuery();
@@ -17,25 +18,39 @@ export default function Home() {
     loadBooks();
   }, [loadBooks]);
 
-  const onInputChange = e => {
-    const value = e.currentTarget.value;
-    setInputValue(value);
-    query.set('word', value);
-    if (value) {
-      searchWord(value);
-    } else {
-      // resetDictionary();
-    }
-    window.history.replaceState(null, null, '?'.concat(query.toString()));
-  };
+  const debouncedChangeHandler = useCallback(debounce(searchWord, 300), [searchWord]);
+
+  const onInputChange = useCallback(
+    e => {
+      const value = e.currentTarget.value;
+
+      setInputValue(value);
+      query.set('word', value);
+
+      if (value) {
+        debouncedChangeHandler(value);
+      } else {
+        resetBooks();
+      }
+
+      window.history.replaceState(null, null, '?'.concat(query.toString()));
+    },
+    [debouncedChangeHandler, resetBooks]
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedChangeHandler.cancel();
+    };
+  }, [debouncedChangeHandler]);
 
   useEffect(() => {
     const value = query.get('word');
     if (value) {
-      searchWord(value);
       setInputValue(value);
+      debouncedChangeHandler(value);
     }
-  }, []);
+  }, [debouncedChangeHandler]);
 
   useEffect(() => {
     inputRef.current?.focus();

@@ -17,7 +17,8 @@ export function useBooks() {
 function useProvideBook() {
   const [bookStorage, dispatch] = useReducer(reducer, {
     loading: true,
-    books: []
+    books: [],
+    list: []
   });
 
   const loadBooks = useCallback(() => {
@@ -26,11 +27,22 @@ function useProvideBook() {
         type: 'setBooks',
         payload: {
           books: response.data,
+          list: response.data,
           loading: false
         }
       });
     });
   }, []);
+
+  const resetBooks = useCallback(() => {
+    dispatch({
+      type: 'setBooks',
+      payload: {
+        books: bookStorage.list,
+        loading: false
+      }
+    });
+  }, [bookStorage.list]);
 
   const searchWord = useCallback(keyword => {
     dispatch({
@@ -53,6 +65,7 @@ function useProvideBook() {
   return {
     bookStorage,
     searchWord,
+    resetBooks,
     loadBooks
   };
 }
