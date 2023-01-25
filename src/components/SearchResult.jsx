@@ -42,7 +42,7 @@ const SearchResult = () => {
                       lineHeight: 1.7
                     }}
                   >
-                    <span>{item.keyword} </span>
+                    <span>{item.title} </span>
                     <span
                       dangerouslySetInnerHTML={{
                         __html: item.description.replace(/\\n/g, '\n')
