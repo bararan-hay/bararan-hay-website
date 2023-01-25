@@ -83,7 +83,7 @@ export default function Home() {
               {bookStorage.loading ? (
                 <Spin />
               ) : (
-                <ul style={{ paddingInlineStart: '20px' }}>
+                <ul style={{ paddingInlineStart: '25px' }}>
                   {bookStorage.books.map(book => (
                     <li key={book._id}>{book.name}</li>
                   ))}
