@@ -75,7 +75,7 @@ export default function Home() {
             <Card bordered={false}>
               <Title level={5}>
                 <BulbOutlined style={{ marginRight: 8 }} />
-                Բարեւ սիրելի օգտատեր
+                Բարի գալուստ
               </Title>
               <Paragraph>
                 Սա ազատ ելակոդով բառարանների շտեմարան է։ Այն բաղկացած է հետեւյալ բառարաններից՝
