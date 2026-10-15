@@ -1,60 +1,134 @@
-import { Typography, Card, Skeleton, Empty } from 'antd';
-import { BookOutlined } from '@ant-design/icons';
 import { useBooks } from 'providers/ProvideBook';
+import { splitName, stampFor } from 'lib/issue';
 
-const { Title } = Typography;
+export function Stamp({ numeral, ink, size = 'md' }) {
+  return (
+    <span className={`stamp stamp--${size} ink-${ink}`} aria-hidden="true">
+      <span className="stamp__frame">{numeral}</span>
+    </span>
+  );
+}
 
-const SearchResult = () => {
+export function Perforation({ label }) {
+  return (
+    <div className="perforation" role="status">
+      <span className="visually-hidden">{label}</span>
+      {Array.from({ length: 18 }, (_, i) => (
+        <i key={i} style={{ animationDelay: `${i * 60}ms` }} />
+      ))}
+    </div>
+  );
+}
+
+function Entry({ item }) {
+  return (
+    <div className="entry">
+      <span className="entry__word">{item.title}</span>{' '}
+      <span
+        className="entry__text"
+        dangerouslySetInnerHTML={{ __html: item.description.replace(/\\n/g, '\n') }}
+      />
+    </div>
+  );
+}
+
+const SearchResult = ({ onRetry }) => {
   const { bookStorage } = useBooks();
+  const { list } = bookStorage;
 
-  const books = bookStorage.books.filter(r => r.words?.length > 0);
+  if (bookStorage.loading) {
+    return <Perforation label="Որոնում ենք բառարաններում…" />;
+  }
+
+  if (bookStorage.error) {
+    return (
+      <div className="notice">
+        <div className="handstamp handstamp--error" aria-hidden="true">
+          ԽԱՓԱՆՈՒՄ
+        </div>
+        <p className="notice__text">Բառարանների սերվերը չպատասխանեց։ Ստուգեք կապը եւ փորձեք կրկին։</p>
+        <button type="button" className="button" onClick={onRetry}>
+          Կրկին որոնել
+        </button>
+      </div>
+    );
+  }
+
+  const found = bookStorage.books.filter(book => book.words?.length > 0);
+  const missing = bookStorage.books.filter(book => !book.words?.length);
+
+  if (found.length === 0) {
+    return (
+      <div className="notice">
+        <div className="handstamp" aria-hidden="true">
+          ՉԿԱ
+        </div>
+        <p className="notice__text">Ընտրված բառարաններում այս բառը չկա</p>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {bookStorage.loading ? (
-        <Card bordered={false}>
-          <Skeleton active />
-        </Card>
-      ) : books.length === 0 ? (
-        <Card bordered={false}>
-          <Empty
-            style={{ paddingTop: 55 }}
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description="Ընտրված բառարաններում այս բառը չկա"
-          />
-        </Card>
-      ) : (
-        books
-          .filter(r => r.words.length > 0)
-          .map(result => (
-            <Card key={result._id} bordered={false} style={{ marginBottom: 5 }}>
-              <Title level={5}>
-                <BookOutlined style={{ marginRight: 8 }} />
-                {result.name}
-              </Title>
-              <ul style={{ padding: '10px 0 0 25px' }}>
-                {result.words.map((item, index) => (
-                  <li
-                    key={index}
-                    style={{
-                      marginBottom: 10,
-                      whiteSpace: 'pre-line',
-                      lineHeight: 1.7
-                    }}
-                  >
-                    <span>{item.title} </span>
-                    <span
-                      dangerouslySetInnerHTML={{
-                        __html: item.description.replace(/\\n/g, '\n')
-                      }}
-                    />
-                  </li>
+    <div className="results">
+      <nav className="rail" aria-label="Բառարաններ, որոնցում բառը գտնվել է">
+        <p className="rail__title">
+          Գտնվել է {found.length} բառարանում
+        </p>
+        <ul className="rail__list">
+          {found.map(book => {
+            const stamp = stampFor(list, book._id);
+            return (
+              <li key={book._id}>
+                <a className="rail__link" href={`#book-${book._id}`}>
+                  <Stamp {...stamp} size="sm" />
+                  <span>{splitName(book.name).title}</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      <div className="column">
+        {found.map(book => {
+          const stamp = stampFor(list, book._id);
+          const { title, source } = splitName(book.name);
+          return (
+            <section key={book._id} id={`book-${book._id}`} className={`book ink-${stamp.ink}`}>
+              <header className="book__head">
+                <Stamp {...stamp} />
+                <div>
+                  <h2 className="book__title">{title}</h2>
+                  {source && <p className="book__source">{source}</p>}
+                </div>
+              </header>
+              <div className="book__entries">
+                {book.words.map((item, index) => (
+                  <Entry key={item._id || index} item={item} />
                 ))}
-              </ul>
-            </Card>
-          ))
-      )}
-    </>
+              </div>
+            </section>
+          );
+        })}
+
+        {missing.length > 0 && (
+          <aside className="missing">
+            <h2 className="missing__title">Այս բառը չկա հետեւյալ բառարաններում</h2>
+            <ul className="missing__list">
+              {missing.map(book => {
+                const stamp = stampFor(list, book._id);
+                return (
+                  <li key={book._id}>
+                    <Stamp {...stamp} size="xs" />
+                    {splitName(book.name).title}
+                  </li>
+                );
+              })}
+            </ul>
+          </aside>
+        )}
+      </div>
+    </div>
   );
 };
 
