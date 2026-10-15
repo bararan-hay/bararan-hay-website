@@ -17,9 +17,11 @@ export function splitName(name = '') {
   return match ? { title: match[1], source: match[2] } : { title: name, source: null };
 }
 
-export function stampFor(list, id) {
+// Search results come back in collection order, so their own index is a stable
+// fallback while the dictionary list is still loading.
+export function stampFor(list, id, fallbackIndex = 0) {
   const index = list.findIndex(book => book._id === id);
-  const position = index === -1 ? 0 : index;
+  const position = index === -1 ? fallbackIndex : index;
   return {
     numeral: armenianNumeral(position + 1),
     ink: INKS[position % INKS.length]

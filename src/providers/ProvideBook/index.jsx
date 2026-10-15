@@ -1,4 +1,4 @@
-import { useContext, createContext, useReducer, useCallback } from 'react';
+import { useContext, createContext, useReducer, useCallback, useRef } from 'react';
 import axios from 'axios';
 import reducer from './reducer';
 
@@ -13,62 +13,56 @@ export function useBooks() {
   return useContext(BookContext);
 }
 
+// The dictionary list and the word search are kept apart so neither response can
+// overwrite the other, whichever arrives first.
 function useProvideBook() {
   const [bookStorage, dispatch] = useReducer(reducer, {
-    loading: true,
-    error: false,
-    books: [],
-    list: []
+    list: [],
+    listLoading: true,
+    listError: false,
+    results: null,
+    resultsWord: '',
+    searching: false,
+    searchError: false
   });
+  const searchId = useRef(0);
 
   const loadBooks = useCallback(() => {
+    dispatch({ type: 'setBooks', payload: { listLoading: true, listError: false } });
     return axios
       .get(process.env.REACT_APP_API + '/books')
-      .then(response => {
-        return dispatch({
-          type: 'setBooks',
-          payload: {
-            books: response.data,
-            list: response.data,
-            loading: false,
-            error: false
-          }
-        });
-      })
-      .catch(() => dispatch({ type: 'setBooks', payload: { loading: false, error: true } }));
+      .then(response =>
+        dispatch({ type: 'setBooks', payload: { list: response.data, listLoading: false } })
+      )
+      .catch(() =>
+        dispatch({ type: 'setBooks', payload: { listLoading: false, listError: true } })
+      );
   }, []);
 
   const resetBooks = useCallback(() => {
+    searchId.current += 1;
     dispatch({
       type: 'setBooks',
-      payload: {
-        books: bookStorage.list,
-        loading: false,
-        error: false
-      }
+      payload: { results: null, resultsWord: '', searching: false, searchError: false }
     });
-  }, [bookStorage.list]);
+  }, []);
 
   const searchWord = useCallback(keyword => {
-    dispatch({
-      type: 'setBooks',
-      payload: {
-        loading: true,
-        error: false
-      }
-    });
+    const id = ++searchId.current;
+    dispatch({ type: 'setBooks', payload: { searching: true, searchError: false } });
     return axios
       .post(process.env.REACT_APP_API + '/books/search', { keyword })
       .then(response => {
-        return dispatch({
+        if (id !== searchId.current) return;
+        dispatch({
           type: 'setBooks',
-          payload: {
-            books: response.data,
-            loading: false
-          }
+          payload: { results: response.data, resultsWord: keyword, searching: false }
         });
       })
-      .catch(() => dispatch({ type: 'setBooks', payload: { loading: false, error: true } }));
+      .catch(() => {
+        if (id !== searchId.current) return;
+        dispatch({ type: 'setBooks', payload: { searching: false, searchError: true } });
+      });
   }, []);
 
   return {

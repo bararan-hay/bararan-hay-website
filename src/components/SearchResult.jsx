@@ -34,13 +34,9 @@ function Entry({ item }) {
 
 const SearchResult = ({ onRetry }) => {
   const { bookStorage } = useBooks();
-  const { list } = bookStorage;
+  const { list, results, searching, searchError } = bookStorage;
 
-  if (bookStorage.loading) {
-    return <Perforation label="Որոնում ենք բառարաններում…" />;
-  }
-
-  if (bookStorage.error) {
+  if (searchError) {
     return (
       <div className="notice">
         <div className="handstamp handstamp--error" aria-hidden="true">
@@ -54,29 +50,38 @@ const SearchResult = ({ onRetry }) => {
     );
   }
 
-  const found = bookStorage.books.filter(book => book.words?.length > 0);
-  const missing = bookStorage.books.filter(book => !book.words?.length);
+  // Nothing to show yet: the first search for this word is still on its way.
+  if (!results) {
+    return <Perforation label="Որոնում ենք բառարաններում…" />;
+  }
+
+  // While a newer search runs, the previous answer stays in place, dimmed.
+  const stateClass = `results-state${searching ? ' results-state--stale' : ''}`;
+  const indexed = results.map((book, index) => ({ book, stamp: stampFor(list, book._id, index) }));
+  const found = indexed.filter(({ book }) => book.words?.length > 0);
+  const missing = indexed.filter(({ book }) => !book.words?.length);
 
   if (found.length === 0) {
     return (
-      <div className="notice">
-        <div className="handstamp" aria-hidden="true">
-          ՉԿԱ
+      <div className={stateClass} aria-busy={searching}>
+        <div className="notice">
+          <div className="handstamp" aria-hidden="true">
+            ՉԿԱ
+          </div>
+          <p className="notice__text">Ընտրված բառարաններում այս բառը չկա</p>
         </div>
-        <p className="notice__text">Ընտրված բառարաններում այս բառը չկա</p>
       </div>
     );
   }
 
   return (
-    <div className="results">
+    <div className={`${stateClass} results`} aria-busy={searching}>
       <nav className="rail" aria-label="Բառարաններ, որոնցում բառը գտնվել է">
         <p className="rail__title">
           Գտնվել է {found.length} բառարանում
         </p>
         <ul className="rail__list">
-          {found.map(book => {
-            const stamp = stampFor(list, book._id);
+          {found.map(({ book, stamp }) => {
             return (
               <li key={book._id}>
                 <a className="rail__link" href={`#book-${book._id}`}>
@@ -90,8 +95,7 @@ const SearchResult = ({ onRetry }) => {
       </nav>
 
       <div className="column">
-        {found.map(book => {
-          const stamp = stampFor(list, book._id);
+        {found.map(({ book, stamp }) => {
           const { title, source } = splitName(book.name);
           return (
             <section key={book._id} id={`book-${book._id}`} className={`book ink-${stamp.ink}`}>
@@ -115,8 +119,7 @@ const SearchResult = ({ onRetry }) => {
           <aside className="missing">
             <h2 className="missing__title">Այս բառը չկա հետեւյալ բառարաններում</h2>
             <ul className="missing__list">
-              {missing.map(book => {
-                const stamp = stampFor(list, book._id);
+              {missing.map(({ book, stamp }) => {
                 return (
                   <li key={book._id}>
                     <Stamp {...stamp} size="xs" />

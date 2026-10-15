@@ -21,9 +21,9 @@ function Welcome() {
         {list.length > 0 && <p className="welcome__count">{list.length} բառարան, մեկ որոնում</p>}
       </div>
 
-      {bookStorage.loading && list.length === 0 ? (
+      {bookStorage.listLoading && list.length === 0 ? (
         <Perforation label="Բեռնում ենք բառարանների ցանկը…" />
-      ) : bookStorage.error && list.length === 0 ? (
+      ) : bookStorage.listError && list.length === 0 ? (
         <div className="notice">
           <p className="notice__text">Բառարանների ցանկը չհաջողվեց բեռնել։</p>
           <button type="button" className="button" onClick={loadBooks}>
@@ -67,8 +67,8 @@ function ClearIcon() {
 
 export default function Home() {
   const { bookStorage, loadBooks, searchWord, resetBooks } = useBooks();
-  const [inputValue, setInputValue] = useState('');
-  const [searched, setSearched] = useState('');
+  const [initialWord] = useState(() => new URLSearchParams(window.location.search).get('word') || '');
+  const [inputValue, setInputValue] = useState(initialWord);
   const inputRef = useRef();
   const query = useQuery();
 
@@ -76,14 +76,12 @@ export default function Home() {
     loadBooks();
   }, [loadBooks]);
 
-  const debouncedChangeHandler = useMemo(
-    () =>
-      debounce(value => {
-        setSearched(value);
-        searchWord(value);
-      }, 300),
-    [searchWord]
-  );
+  // A word from the URL is searched right away, without waiting for the debounce.
+  useEffect(() => {
+    if (initialWord) searchWord(initialWord);
+  }, [initialWord, searchWord]);
+
+  const debouncedChangeHandler = useMemo(() => debounce(searchWord, 300), [searchWord]);
 
   const updateValue = useCallback(
     value => {
@@ -94,7 +92,6 @@ export default function Home() {
         debouncedChangeHandler(value);
       } else {
         debouncedChangeHandler.cancel();
-        setSearched('');
         resetBooks();
       }
 
@@ -111,20 +108,12 @@ export default function Home() {
   }, [debouncedChangeHandler]);
 
   useEffect(() => {
-    const value = query.get('word');
-    if (value) {
-      setInputValue(value);
-      debouncedChangeHandler(value);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedChangeHandler]);
-
-  useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  const found = bookStorage.books.filter(book => book.words?.length > 0).length;
-  const showPostmark = inputValue && searched && !bookStorage.loading && !bookStorage.error && found > 0;
+  const { results, resultsWord } = bookStorage;
+  const found = (results || []).filter(book => book.words?.length > 0).length;
+  const showPostmark = Boolean(inputValue && results && !bookStorage.searchError && found > 0);
 
   return (
     <>
@@ -181,7 +170,7 @@ export default function Home() {
             )}
           </form>
         </div>
-        {showPostmark && <Postmark key={searched} word={searched} count={found} />}
+        {showPostmark && <Postmark key={resultsWord} word={resultsWord} count={found} />}
       </header>
 
       <main className="page">

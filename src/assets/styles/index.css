@@ -4,7 +4,7 @@
   font-weight: 100 900;
   font-stretch: 62.5% 100%;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @font-face {
@@ -13,7 +13,7 @@
   font-weight: 100 900;
   font-stretch: 62.5% 100%;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 :root {
@@ -508,6 +508,15 @@ a:hover { color: var(--ink); }
 }
 
 /* results */
+.results-state {
+  transition: opacity 200ms var(--ease-out);
+}
+
+.results-state--stale {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 .results {
   display: grid;
   grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
